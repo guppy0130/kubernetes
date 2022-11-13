@@ -1,0 +1,25 @@
+---
+apiVersion: "kustomize.config.k8s.io/v1beta1"
+kind: "Kustomization"
+resources:
+  - "../../base"
+
+configMapGenerator:
+  # https://vault.inthemainfra.me/ui/vault/secrets/kubernetes/show/ceph-csi
+  - name: "ceph-csi-config"
+    behavior: "replace"
+    files:
+      - "config.json=ceph-csi-config.json"
+
+secretGenerator:
+  # https://vault.inthemainfra.me/ui/vault/secrets/kubernetes/show/ceph-csi
+  - name: "csi-rbd-secret"
+    behavior: "merge"
+    files:
+      - "userKey=csi-rbd-userkey.secret"
+
+patchesStrategicMerge:
+  # https://vault.inthemainfra.me/ui/vault/secrets/kubernetes/show/ceph-csi
+  - "csi-rbdplugin-storage-class.yml"
+  # view this file to see changes
+  - "csi-rbdplugin-provisioner.yml"
