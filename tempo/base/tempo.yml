@@ -1,0 +1,60 @@
+---
+# https://github.com/grafana/tempo/blob/main/example/docker-compose/scalable-single-binary/tempo-scalable-single-binary.yaml
+search_enabled: true
+
+server:
+  http_listen_port: 3200
+
+distributor:
+  receivers:
+    otlp:
+      protocols:
+        grpc:
+          endpoint: "0.0.0.0:4317"
+        http:
+          endpoint: "0.0.0.0:4318"
+
+ingester:
+  trace_idle_period: 10s
+  max_block_bytes: 1_000_000
+  max_block_duration: 5m
+  lifecycler:
+    ring:
+      kvstore:
+        store: "memberlist"
+      replication_factor: 3
+    heartbeat_period: 100ms
+
+compactor:
+  ring:
+    kvstore:
+      store: "memberlist"
+  compaction:
+    compaction_window: 1h
+    max_block_bytes: 100_000_000
+    block_retention: 1h
+    compacted_block_retention: 10m
+
+memberlist:
+  abort_if_cluster_join_fails: false
+  bind_port: 7946
+  join_members:
+    - "tempo-gossip:7946"
+
+storage:
+  trace:
+    backend: "local"
+    wal:
+      path: "/tmp/tempo/wal"
+      encoding: "snappy"
+    local:
+      # temporary until I get s3 storage up. can't use default value because:
+      # https://github.com/grafana/tempo/issues/1657
+      path: "/tmp/tempo/traces"
+
+querier:
+  frontend_worker:
+    frontend_address: "tempo-frontend:9095"
+
+usage_report:
+  reporting_enabled: false

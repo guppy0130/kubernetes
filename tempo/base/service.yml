@@ -1,0 +1,67 @@
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "tempo-http"
+spec:
+  publishNotReadyAddresses: true
+  ports:
+    - port: 3200
+      protocol: "TCP"
+      name: "tempo-http"
+  selector:
+    app: "tempo"
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "tempo-gossip"
+spec:
+  publishNotReadyAddresses: true
+  ports:
+    - port: 7946
+      protocol: "TCP"
+      name: "tempo-gossip"
+  selector:
+    app: "tempo"
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "tempo-frontend"
+spec:
+  publishNotReadyAddresses: true
+  ports:
+    - port: 9095
+      protocol: "TCP"
+      name: "tempo-frontend"
+  selector:
+    app: "tempo"
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "tempo-otel-http"
+spec:
+  publishNotReadyAddresses: true
+  ports:
+    - port: 4318
+      protocol: "TCP"
+      name: "tempo-otel-http"
+  selector:
+    app: "tempo"
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "tempo-otel-grpc"
+  annotations:
+    traefik.ingress.kubernetes.io/service.serversscheme: "h2c"
+spec:
+  publishNotReadyAddresses: true
+  ports:
+    - port: 4317
+      protocol: "TCP"
+      name: "tempo-otel-grpc"
+  selector:
+    app: "tempo"

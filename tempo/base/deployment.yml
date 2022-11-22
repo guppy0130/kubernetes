@@ -1,0 +1,72 @@
+---
+kind: "Deployment"
+apiVersion: "apps/v1"
+metadata:
+  name: "tempo"
+spec:
+  # somehow, increasing this works automagically; all instances are able to
+  # eventually reach each other. check this at `:3200/ingester/ring`.
+  replicas: 2
+  selector:
+    matchLabels:
+      app: "tempo"
+  strategy:
+    type: "RollingUpdate"
+  template:
+    spec:
+      containers:
+        - name: "tempo"
+          image: "grafana/tempo:latest"
+          imagePullPolicy: "IfNotPresent"
+          args:
+            - "-target=scalable-single-binary"
+            - "-config.file=/etc/tempo.yml"
+          ports:
+            - containerPort: 3200
+              name: "tempo-http"
+              protocol: "TCP"
+            - containerPort: 4317
+              name: "tempo-otel-grpc"
+              protocol: "TCP"
+            - containerPort: 4318
+              name: "tempo-otel-http"
+              protocol: "TCP"
+            - containerPort: 9095
+              name: "tempo-frontend"
+              protocol: "TCP"
+            - containerPort: 7946
+              name: "tempo-gossip"
+              protocol: "TCP"
+          # readiness/liveness probes were messing with cluster health
+          # readinessProbe:
+          #   failureThreshold: 3
+          #   httpGet:
+          #     path: "/ready"
+          #     port: "tempo-http"
+          #     scheme: "HTTP"
+          #   initialDelaySeconds: 120
+          #   periodSeconds: 30
+          #   successThreshold: 1
+          #   timeoutSeconds: 2
+          # livenessProbe:
+          #   failureThreshold: 3
+          #   httpGet:
+          #     port: "tempo-http"
+          #     path: "/ready"
+          #     scheme: "HTTP"
+          #   initialDelaySeconds: 120
+          #   periodSeconds: 10
+          #   successThreshold: 1
+          #   timeoutSeconds: 1
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "250Mi"
+          volumeMounts:
+            - mountPath: "/etc/tempo.yml"
+              name: "tempo-config"
+              subPath: "tempo.yml"
+      volumes:
+        - name: "tempo-config"
+          configMap:
+            name: "tempo-config"

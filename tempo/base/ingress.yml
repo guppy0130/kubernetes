@@ -1,0 +1,44 @@
+---
+apiVersion: "networking.k8s.io/v1"
+kind: "Ingress"
+metadata:
+  name: "tempo"
+spec:
+  rules:
+    - host: "tempo.k3s.home"
+      http:
+        paths:
+          - path: "/"
+            pathType: "Prefix"
+            backend:
+              service:
+                name: "tempo-http"
+                port:
+                  number: 3200
+    - host: "http.otlp.traces.k3s.home"
+      http:
+        paths:
+          - path: "/"
+            pathType: "Prefix"
+            backend:
+              service:
+                name: "tempo-otel-http"
+                port:
+                  number: 4318
+---
+apiVersion: "networking.k8s.io/v1"
+kind: "Ingress"
+metadata:
+  name: "tempo-grpc"
+spec:
+  rules:
+    - host: "grpc.otlp.traces.k3s.home"
+      http:
+        paths:
+          - path: "/"
+            pathType: "Prefix"
+            backend:
+              service:
+                name: "tempo-otel-grpc"
+                port:
+                  number: 4317
