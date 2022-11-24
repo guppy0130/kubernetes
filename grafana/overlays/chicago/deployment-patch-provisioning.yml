@@ -33,3 +33,5 @@ spec:
                 path: "datasources/influxdb.yml"
               - key: "tempo.yml"
                 path: "datasources/tempo.yml"
+              - key: "victoriametrics.yml"
+                path: "datasources/victoriametrics.yml"

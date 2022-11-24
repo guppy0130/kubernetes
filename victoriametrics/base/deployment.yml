@@ -1,0 +1,36 @@
+---
+kind: "Deployment"
+apiVersion: "apps/v1"
+metadata:
+  name: "victoriametrics"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "victoriametrics"
+  strategy:
+    type: "RollingUpdate"
+  template:
+    spec:
+      containers:
+        - name: "victoriametrics"
+          image: "victoriametrics/victoria-metrics:v1.84.0"
+          ports:
+            - containerPort: 8428
+              name: "victoriametrics"
+              protocol: "TCP"
+          volumeMounts:
+            - mountPath: "/victoria-metrics-data"
+              name: "victoriametrics-data-pvc"
+          resources:
+            requests:
+              cpu: "500m"
+              memory: "500Mi"
+          # readinessProbe:
+          #   httpGet:
+          #     port: "victoriametrics-http"
+          #     path: "/metrics"
+      volumes:
+        - name: "victoriametrics-data-pvc"
+          persistentVolumeClaim:
+            claimName: "victoriametrics-data-pvc"
