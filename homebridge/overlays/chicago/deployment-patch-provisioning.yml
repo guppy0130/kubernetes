@@ -1,0 +1,34 @@
+---
+kind: "Deployment"
+apiVersion: "apps/v1"
+metadata:
+  name: "homebridge"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "homebridge"
+  strategy:
+    # you need to recreate so that the RWO PVC works
+    type: "Recreate"
+  template:
+    spec:
+      # you need to use the host's networking stack to publish mDNS packets.
+      hostNetwork: true
+      containers:
+        - name: "homebridge"
+          image: "oznu/homebridge:2022-11-14"
+          volumeMounts:
+            - mountPath: "/homebridge/config.json"
+              name: "homebridge-config"
+              subPath: "config.json"
+            - mountPath: "/homebridge/package.json"
+              name: "homebridge-plugins"
+              subPath: "package.json"
+      volumes:
+        - name: "homebridge-config"
+          configMap:
+            name: "homebridge-config"
+        - name: "homebridge-plugins"
+          configMap:
+            name: "homebridge-plugins"

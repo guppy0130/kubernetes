@@ -1,0 +1,50 @@
+---
+kind: "Deployment"
+apiVersion: "apps/v1"
+metadata:
+  name: "homebridge"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "homebridge"
+  strategy:
+    # you need to recreate so that the RWO PVC works
+    type: "Recreate"
+  template:
+    spec:
+      containers:
+        - name: "homebridge"
+          image: "oznu/homebridge:2022-11-14"
+          imagePullPolicy: "IfNotPresent"
+          # avahi present by default, turn it off (use ciao)
+          # https://github.com/oznu/docker-homebridge/issues/437
+          env:
+            - name: "ENABLE_AVAHI"
+              value: "0"
+            - name: "TZ"
+              value: "America/Chicago"
+          ports:
+            - containerPort: 8581
+              name: "homebridge-http"
+              protocol: "TCP"
+            - containerPort: 5353
+              name: "homebridge-mdns"
+              protocol: "UDP"
+          volumeMounts:
+            - mountPath: "/homebridge/auth.json"
+              name: "homebridge-auth"
+              subPath: "auth.json"
+            - mountPath: "/homebridge/persist"
+              name: "homebridge-persist"
+          resources:
+            requests:
+              cpu: "250m"
+              memory: "250Mi"
+      volumes:
+        - name: "homebridge-auth"
+          configMap:
+            name: "homebridge-auth"
+        - name: "homebridge-persist"
+          persistentVolumeClaim:
+            claimName: "homebridge-persist-pvc"
