@@ -1,0 +1,18 @@
+apiVersion: "networking.k8s.io/v1"
+kind: "Ingress"
+metadata:
+  name: "plex"
+  labels:
+    name: "plex"
+spec:
+  rules:
+    - host: "plex.k3s.home"
+      http:
+        paths:
+          - pathType: "Prefix"
+            path: "/"
+            backend:
+              service:
+                name: "plex-http"
+                port:
+                  number: 32400
