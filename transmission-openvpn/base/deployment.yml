@@ -1,0 +1,48 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "transmission-openvpn"
+spec:
+  selector:
+    matchLabels:
+      app: "transmission-openvpn"
+  template:
+    metadata:
+      labels:
+        app: "transmission-openvpn"
+    spec:
+      containers:
+        - name: "transmission-openvpn"
+          image: "haugene/transmission-openvpn:4.3.2"
+          securityContext:
+            allowPrivilegeEscalation: true
+            capabilities:
+              add:
+                - "NET_ADMIN"
+            privileged: true
+          env:
+            - name: "PUID"
+              value: "1000"
+            - name: "PGID"
+              value: "1000"
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 9091
+              name: "torrent-http"
+              protocol: "TCP"
+          volumeMounts:
+            - mountPath: "/data"
+              name: "media-pvc"
+            - mountPath: "/dev/net/tun"
+              name: "tunnel"
+      volumes:
+        - name: "media-pvc"
+          persistentVolumeClaim:
+            claimName: "media-pvc"
+        - name: "tunnel"
+          hostPath:
+            path: "/dev/net/tun"
