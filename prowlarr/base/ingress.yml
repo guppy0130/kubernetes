@@ -1,0 +1,19 @@
+---
+apiVersion: "networking.k8s.io/v1"
+kind: "Ingress"
+metadata:
+  name: "prowlarr"
+  labels:
+    name: "prowlarr"
+spec:
+  rules:
+    - host: "prowlarr.k3s.home"
+      http:
+        paths:
+          - pathType: "Prefix"
+            path: "/"
+            backend:
+              service:
+                name: "prowlarr"
+                port:
+                  name: "prowlarr-http"
