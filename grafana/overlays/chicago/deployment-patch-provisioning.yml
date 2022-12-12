@@ -33,3 +33,5 @@ spec:
                 path: "datasources/influxdb.yml"
               - key: "tempo.yml"
                 path: "datasources/tempo.yml"
+              - key: "loki.yml"
+                path: "datasources/loki.yml"
