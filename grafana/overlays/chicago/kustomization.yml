@@ -19,3 +19,4 @@ configMapGenerator:
       - "provisioning/datasources/influxdb.yml"
       - "provisioning/datasources/tempo.yml"
       - "provisioning/datasources/victoriametrics.yml"
+      - "provisioning/datasources/loki.yml"

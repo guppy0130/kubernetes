@@ -1,0 +1,32 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "loki"
+spec:
+  selector:
+    matchLabels:
+      app: "loki"
+  template:
+    metadata:
+      labels:
+        app: "loki"
+    spec:
+      securityContext:
+        fsGroup: 10001
+      containers:
+        - name: "loki"
+          image: "grafana/loki:2.7.1"
+          resources:
+            limits:
+              memory: "300Mi"
+              cpu: "250m"
+          ports:
+            - containerPort: 3100
+              name: "loki-http"
+          volumeMounts:
+            - mountPath: "/loki"
+              name: "loki-data-pvc"
+      volumes:
+        - name: "loki-data-pvc"
+          persistentVolumeClaim:
+            claimName: "loki-data-pvc"
