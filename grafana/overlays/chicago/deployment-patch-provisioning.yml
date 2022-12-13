@@ -37,3 +37,7 @@ spec:
                 path: "datasources/victoriametrics.yml"
               - key: "loki.yml"
                 path: "datasources/loki.yml"
+              - key: "dashboard-provisioning.yml"
+                path: "dashboards/dashboard-provisioning.yml"
+              - key: "modem.json"
+                path: "dashboards/modem.json"

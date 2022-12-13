@@ -20,3 +20,5 @@ configMapGenerator:
       - "provisioning/datasources/tempo.yml"
       - "provisioning/datasources/victoriametrics.yml"
       - "provisioning/datasources/loki.yml"
+      - "provisioning/dashboards/dashboard-provisioning.yml"
+      - "provisioning/dashboards/modem.json"
