@@ -1,0 +1,19 @@
+---
+apiVersion: "networking.k8s.io/v1"
+kind: "Ingress"
+metadata:
+  name: "komga"
+  labels:
+    name: "komga"
+spec:
+  rules:
+    - host: "komga.k3s.home"
+      http:
+        paths:
+          - pathType: "Prefix"
+            path: "/"
+            backend:
+              service:
+                name: "komga"
+                port:
+                  number: 8080

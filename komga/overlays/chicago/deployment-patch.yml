@@ -1,0 +1,14 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "komga"
+spec:
+  selector:
+    matchLabels:
+      app: "komga"
+  template:
+    spec:
+      nodeName: "k3os-20356"
+      containers:
+        - name: "komga"
