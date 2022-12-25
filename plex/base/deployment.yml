@@ -17,9 +17,12 @@ spec:
       # hostNetwork: true
       securityContext:
         fsGroup: 1000
+        # runAsNonRoot: true
+        seccompProfile:
+          type: "RuntimeDefault"
       containers:
         - name: "plex"
-          image: "linuxserver/plex:1.29.2"
+          image: "linuxserver/plex:1.30.0"
           resources:
             limits:
               memory: "4Gi"
