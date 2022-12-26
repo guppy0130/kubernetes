@@ -1,0 +1,16 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "prowlarr"
+spec:
+  selector:
+    matchLabels:
+      app: "prowlarr"
+  template:
+    spec:
+      containers:
+        - name: "prowlarr"
+          env:
+            - name: "TZ"
+              value: "America/Los_Angeles"

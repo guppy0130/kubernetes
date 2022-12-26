@@ -11,9 +11,11 @@ spec:
       app: "prowlarr"
   template:
     spec:
+      securityContext:
+        fsGroup: 1000
       containers:
         - name: "prowlarr"
-          image: "linuxserver/prowlarr:develop-version-0.4.10.2111"
+          image: "linuxserver/prowlarr:develop-version-1.0.0.2171"
           resources:
             limits:
               memory: "512Mi"
