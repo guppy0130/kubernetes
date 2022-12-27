@@ -1,0 +1,17 @@
+---
+apiVersion: "networking.k8s.io/v1"
+kind: "Ingress"
+metadata:
+  name: "homebridge-http"
+spec:
+  rules:
+    - host: "homebridge.k3s.home"
+      http:
+        paths:
+          - path: "/"
+            pathType: "Prefix"
+            backend:
+              service:
+                name: "homebridge-http"
+                port:
+                  name: "homebridge-http"

@@ -1,0 +1,21 @@
+---
+apiVersion: "kustomize.config.k8s.io/v1beta1"
+kind: "Kustomization"
+namespace: "home-automation"
+commonLabels:
+  app: "homebridge"
+
+resources:
+  - "../../base"
+
+patchesStrategicMerge:
+  - "deployment-patch-provisioning.yml"
+
+configMapGenerator:
+  # https://vault.inthemainfra.me/ui/vault/secrets/kubernetes/show/homebridge/overlays/chicago/homebridge-config/config.json
+  - name: "homebridge-config"
+    files:
+      - "config.json=homebridge-config/config.secret"
+  - name: "homebridge-plugins"
+    files:
+      - "homebridge-config/package.json"

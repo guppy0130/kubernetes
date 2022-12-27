@@ -1,0 +1,17 @@
+---
+apiVersion: "kustomize.config.k8s.io/v1beta1"
+kind: "Kustomization"
+namespace: "home-automation"
+commonLabels:
+  app: "homebridge"
+
+resources:
+  - "deployment.yml"
+  - "service.yml"
+  - "ingress.yml"
+  - "persist-pvc.yml"
+
+configMapGenerator:
+  - name: "homebridge-auth"
+    files:
+      - "homebridge-config/auth.json"
