@@ -1,0 +1,22 @@
+---
+apiVersion: "kustomize.config.k8s.io/v1beta1"
+kind: "Kustomization"
+namespace: "media"
+commonLabels:
+  app: "transmission-openvpn"
+
+resources:
+  - "../../base"
+
+patchesStrategicMerge:
+  - "deployment-patch.yml"
+
+secretGenerator:
+  - name: "vpn-credentials"
+    envs:
+      - "vpn-credentials.secret"
+
+configMapGenerator:
+  - name: "transmission-config"
+    envs:
+      - "transmission-config.env"
