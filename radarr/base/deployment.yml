@@ -1,0 +1,43 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "radarr"
+spec:
+  strategy:
+    type: "Recreate"
+  selector:
+    matchLabels:
+      app: "radarr"
+  template:
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: "radarr"
+          image: "linuxserver/radarr:4.2.4"
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "250m"
+          ports:
+            - containerPort: 7878
+              name: "radarr-http"
+              protocol: "TCP"
+          env:
+            - name: "PUID"
+              value: "1000"
+            - name: "PGID"
+              value: "1000"
+          volumeMounts:
+            - mountPath: "/config"
+              name: "radarr-config"
+            - mountPath: "/data"
+              name: "media-pvc"
+      volumes:
+        - name: "radarr-config"
+          persistentVolumeClaim:
+            claimName: "radarr-config"
+        - name: "media-pvc"
+          persistentVolumeClaim:
+            claimName: "media-pvc"

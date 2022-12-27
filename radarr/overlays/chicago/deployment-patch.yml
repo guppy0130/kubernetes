@@ -1,0 +1,17 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "radarr"
+spec:
+  selector:
+    matchLabels:
+      app: "radarr"
+  template:
+    spec:
+      nodeName: "k3os-20356"
+      containers:
+        - name: "radarr"
+          env:
+            - name: "TZ"
+              value: "America/Chicago"
