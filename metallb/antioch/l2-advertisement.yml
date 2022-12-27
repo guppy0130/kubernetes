@@ -1,0 +1,5 @@
+---
+apiVersion: "metallb.io/v1beta1"
+kind: "L2Advertisement"
+metadata:
+  name: "192-168-1-225-27-l2ad"
