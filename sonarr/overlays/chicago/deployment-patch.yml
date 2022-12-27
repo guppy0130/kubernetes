@@ -1,0 +1,17 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "sonarr"
+spec:
+  selector:
+    matchLabels:
+      app: "sonarr"
+  template:
+    spec:
+      nodeName: "k3os-20356"
+      containers:
+        - name: "sonarr"
+          env:
+            - name: "TZ"
+              value: "America/Chicago"

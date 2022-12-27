@@ -1,0 +1,43 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "sonarr"
+spec:
+  strategy:
+    type: "Recreate"
+  selector:
+    matchLabels:
+      app: "sonarr"
+  template:
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: "sonarr"
+          image: "linuxserver/sonarr:develop-version-4.0.0.292"
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "250m"
+          ports:
+            - containerPort: 8989
+              name: "sonarr-http"
+              protocol: "TCP"
+          env:
+            - name: "PUID"
+              value: "1000"
+            - name: "PGID"
+              value: "1000"
+          volumeMounts:
+            - mountPath: "/config"
+              name: "sonarr-config"
+            - mountPath: "/data"
+              name: "media-pvc"
+      volumes:
+        - name: "sonarr-config"
+          persistentVolumeClaim:
+            claimName: "sonarr-config"
+        - name: "media-pvc"
+          persistentVolumeClaim:
+            claimName: "media-pvc"

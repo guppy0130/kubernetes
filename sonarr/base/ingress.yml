@@ -1,0 +1,19 @@
+---
+apiVersion: "networking.k8s.io/v1"
+kind: "Ingress"
+metadata:
+  name: "sonarr"
+  labels:
+    name: "sonarr"
+spec:
+  rules:
+    - host: "sonarr.k3s.home"
+      http:
+        paths:
+          - pathType: "Prefix"
+            path: "/"
+            backend:
+              service:
+                name: "sonarr"
+                port:
+                  name: "sonarr-http"
