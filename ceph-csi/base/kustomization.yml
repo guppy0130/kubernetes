@@ -1,0 +1,35 @@
+---
+apiVersion: "kustomize.config.k8s.io/v1beta1"
+kind: "Kustomization"
+generatorOptions:
+  # disabled hash suffixes because services looking for specific names
+  disableNameSuffixHash: true
+resources:
+  - "https://raw.githubusercontent.com/ceph/ceph-csi/devel/deploy/rbd/kubernetes/csidriver.yaml"
+  # https://docs.ceph.com/en/latest/rbd/rbd-kubernetes/#generate-ceph-csi-configmap
+  - "https://raw.githubusercontent.com/ceph/ceph-csi/devel/deploy/rbd/kubernetes/csi-config-map.yaml"
+  # https://docs.ceph.com/en/latest/rbd/rbd-kubernetes/#configure-ceph-csi-plugins
+  - "https://raw.githubusercontent.com/ceph/ceph-csi/master/deploy/rbd/kubernetes/csi-provisioner-rbac.yaml"
+  - "https://raw.githubusercontent.com/ceph/ceph-csi/devel/deploy/rbd/kubernetes/csi-nodeplugin-rbac.yaml"
+  - "https://raw.githubusercontent.com/ceph/ceph-csi/master/deploy/rbd/kubernetes/csi-rbdplugin-provisioner.yaml"
+  - "https://raw.githubusercontent.com/ceph/ceph-csi/master/deploy/rbd/kubernetes/csi-rbdplugin.yaml"
+  # https://docs.ceph.com/en/latest/rbd/rbd-kubernetes/#create-a-storageclass
+  - "csi-rbdplugin-storage-class.yml"
+  # https://docs.ceph.com/en/latest/rbd/rbd-kubernetes/#create-a-persistentvolumeclaim
+  - "csi-rbd-pvc-test.yml"
+
+configMapGenerator:
+  - name: "ceph-config"
+    files:
+      - "ceph.conf=ceph.conf"
+    literals:
+      # keyring is a required key and its value should be empty
+      - "keyring="
+  - name: "ceph-csi-encryption-kms-config"
+    literals:
+      - "config.json={}"
+
+secretGenerator:
+  - name: "csi-rbd-secret"
+    literals:
+      - "userID=kubernetes"

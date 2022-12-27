@@ -1,0 +1,8 @@
+---
+$patch: "merge"
+apiVersion: "storage.k8s.io/v1"
+kind: "StorageClass"
+metadata:
+  name: "csi-rbd-sc"
+parameters:
+  clusterID: "a05891f1-8170-4f0b-bcc0-37ccbfdf1f69"
