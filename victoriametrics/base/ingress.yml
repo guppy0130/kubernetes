@@ -1,0 +1,19 @@
+---
+apiVersion: "networking.k8s.io/v1"
+kind: "Ingress"
+metadata:
+  name: "victoriametrics"
+  labels:
+    name: "victoriametrics"
+spec:
+  rules:
+    - host: "victoriametrics.k3s.home"
+      http:
+        paths:
+          - pathType: "Prefix"
+            path: "/"
+            backend:
+              service:
+                name: "victoriametrics"
+                port:
+                  name: "victoriametrics"

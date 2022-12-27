@@ -1,0 +1,19 @@
+---
+apiVersion: "networking.k8s.io/v1"
+kind: "Ingress"
+metadata:
+  name: "loki"
+  labels:
+    name: "loki"
+spec:
+  rules:
+    - host: "loki.k3s.home"
+      http:
+        paths:
+          - pathType: "Prefix"
+            path: "/"
+            backend:
+              service:
+                name: "loki"
+                port:
+                  name: "loki"
