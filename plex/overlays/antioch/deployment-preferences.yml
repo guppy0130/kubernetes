@@ -12,21 +12,15 @@ spec:
       labels:
         app: "plex"
     spec:
+      # for UDP (bonjour, gday)
+      hostNetwork: true
       containers:
         - name: "plex"
           image: "linuxserver/plex:latest"
+          imagePullPolicy: "Always"
           env:
             - name: "PLEX_MEDIA_SERVER_USE_SYSLOG"
               value: "true"
-            # - name: "PLEX_CLAIM"
-            #   value: "claim-byGN8ucJGHqGfx2xgbhT"
           volumeMounts:
             - mountPath: "/config"
               name: "plex-config-pvc"
-            # - mountPath: "/config/Library/Application Support/Plex Media Server/Preferences.xml"
-            #   name: "plex-preferences-xml"
-            #   subPath: "Preferences.xml"
-      # volumes:
-      #   - name: "plex-preferences-xml"
-      #     configMap:
-      #       name: "plex-preferences-xml"
