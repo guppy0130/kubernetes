@@ -12,6 +12,8 @@ spec:
       labels:
         app: "transmission-openvpn"
     spec:
+      securityContext:
+        fsGroup: 1000
       containers:
         - name: "transmission-openvpn"
           image: "haugene/transmission-openvpn:4.3.2"
@@ -37,12 +39,7 @@ spec:
           volumeMounts:
             - mountPath: "/data"
               name: "media-pvc"
-            - mountPath: "/dev/net/tun"
-              name: "tunnel"
       volumes:
         - name: "media-pvc"
           persistentVolumeClaim:
             claimName: "media-pvc"
-        - name: "tunnel"
-          hostPath:
-            path: "/dev/net/tun"

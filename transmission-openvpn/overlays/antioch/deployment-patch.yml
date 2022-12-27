@@ -1,0 +1,19 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "transmission-openvpn"
+spec:
+  selector:
+    matchLabels:
+      app: "transmission-openvpn"
+  template:
+    spec:
+      containers:
+        - name: "transmission-openvpn"
+          image: "haugene/transmission-openvpn"
+          envFrom:
+            - configMapRef:
+                name: "transmission-config"
+            - secretRef:
+                name: "vpn-credentials"
