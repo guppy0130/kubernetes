@@ -1,0 +1,38 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "prowlarr"
+spec:
+  strategy:
+    type: "Recreate"
+  selector:
+    matchLabels:
+      app: "prowlarr"
+  template:
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: "prowlarr"
+          image: "linuxserver/prowlarr:develop-version-1.0.0.2171"
+          resources:
+            limits:
+              memory: "512Mi"
+              cpu: "250m"
+          ports:
+            - containerPort: 9696
+              name: "prowlarr-http"
+              protocol: "TCP"
+          env:
+            - name: "PUID"
+              value: "1000"
+            - name: "PGID"
+              value: "1000"
+          volumeMounts:
+            - mountPath: "/config"
+              name: "prowlarr-config"
+      volumes:
+        - name: "prowlarr-config"
+          persistentVolumeClaim:
+            claimName: "prowlarr-config"

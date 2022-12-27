@@ -1,0 +1,13 @@
+---
+apiVersion: "v1"
+kind: "PersistentVolumeClaim"
+metadata:
+  name: "prowlarr-config"
+spec:
+  resources:
+    requests:
+      storage: "64Mi"
+  volumeMode: "Filesystem"
+  accessModes:
+    - "ReadWriteOnce"
+  storageClassName: "csi-rbd-sc"
