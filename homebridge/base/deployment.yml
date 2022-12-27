@@ -16,7 +16,6 @@ spec:
       containers:
         - name: "homebridge"
           image: "oznu/homebridge:2022-11-14"
-          imagePullPolicy: "IfNotPresent"
           # avahi present by default, turn it off (use ciao)
           # https://github.com/oznu/docker-homebridge/issues/437
           env:
