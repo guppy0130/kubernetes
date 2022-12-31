@@ -10,4 +10,4 @@ spec:
   volumeMode: "Filesystem"
   accessModes:
     - "ReadWriteOnce"
-  storageClassName: "ceph-filesystem"
+  storageClassName: "topolvm-nvme-ext4"

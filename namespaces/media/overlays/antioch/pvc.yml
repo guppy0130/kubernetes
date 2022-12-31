@@ -7,8 +7,8 @@ metadata:
 spec:
   resources:
     requests:
-      storage: "10Ti"
+      storage: "13Ti"
   volumeMode: "Filesystem"
   accessModes:
-    - "ReadWriteMany"
-  storageClassName: "ceph-filesystem"
+    - "ReadWriteOnce"
+  storageClassName: "topolvm-hdd-ext4"

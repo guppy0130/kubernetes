@@ -6,8 +6,8 @@ metadata:
 spec:
   resources:
     requests:
-      storage: "128Gi"
+      storage: "100Gi"
   volumeMode: "Filesystem"
   accessModes:
     - "ReadWriteOnce"
-  storageClassName: "ceph-filesystem"
+  storageClassName: "topolvm-nvme-ext4"

@@ -39,6 +39,27 @@ spec:
           volumeMounts:
             - mountPath: "/data"
               name: "media-pvc"
+        - name: "transmission-exporter"
+          image: "micaelserrano/transmission-exporter"
+          imagePullPolicy: "Always"
+          resources:
+            limits:
+              cpu: 100m
+              memory: 100Mi
+            requests:
+              cpu: 50m
+              memory: 50Mi
+          env:
+            - name: TRANSMISSION_ADDR
+              value: "http://localhost:9091"
+            - name: WEB_PATH
+              value: "/metrics"
+            - name: WEB_ADDR
+              value: ":9190"
+          ports:
+            - containerPort: 9190
+              name: "torrent-export"
+              protocol: "TCP"
       volumes:
         - name: "media-pvc"
           persistentVolumeClaim:
