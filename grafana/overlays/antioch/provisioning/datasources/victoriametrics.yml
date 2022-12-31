@@ -1,0 +1,10 @@
+---
+apiVersion: 1
+datasources:
+  - name: "victoriametrics"
+    type: "prometheus"
+    access: "proxy"
+    url: "http://vmsingle-vm-op-victoria-metrics-k8s-stack:8429"
+    orgId: 1
+    version: 1
+    editable: false

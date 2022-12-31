@@ -10,5 +10,5 @@ spec:
       storage: "10Ti"
   volumeMode: "Filesystem"
   accessModes:
-    - "ReadWriteMany"
-  storageClassName: "ceph-filesystem"
+    - "ReadWriteOnce"
+  storageClassName: "topolvm-hdd-ext4"
