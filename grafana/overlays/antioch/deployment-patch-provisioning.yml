@@ -1,0 +1,37 @@
+---
+kind: "Deployment"
+apiVersion: "apps/v1"
+metadata:
+  name: "grafana"
+spec:
+  selector:
+    matchLabels:
+      app: "grafana"
+  template:
+    metadata:
+      labels:
+        app: "grafana"
+    spec:
+      containers:
+        - name: "grafana"
+          image: "grafana/grafana:9.3.2"
+          volumeMounts:
+            - mountPath: "/etc/grafana/grafana.ini"
+              name: "grafana-configmap"
+              subPath: "grafana.ini"
+            - mountPath: "/etc/grafana/provisioning"
+              name: "grafana-provisioning"
+      volumes:
+        - name: "grafana-configmap"
+          configMap:
+            name: "grafana-config"
+        - name: "grafana-provisioning"
+          configMap:
+            name: "grafana-provisioning"
+            items:
+              - key: "victoriametrics.yml"
+                path: "datasources/victoriametrics.yml"
+              - key: "loki.yml"
+                path: "datasources/loki.yml"
+              - key: "alertmanager.yml"
+                path: "datasources/alertmanager.yml"
