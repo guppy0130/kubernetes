@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "tailscale"
+spec:
+  selector:
+    matchLabels:
+      app: "tailscale"
+  template:
+    metadata:
+      labels:
+        app: "tailscale"
+    spec:
+      containers:
+        - name: "tailscale"
+          image: "tailscale/tailscale:v1.34.1"
+          securityContext:
+            runAsUser: 1000
+            runAsGroup: 1000
+          resources:
+            limits:
+              memory: "64Mi"
+              cpu: "100m"

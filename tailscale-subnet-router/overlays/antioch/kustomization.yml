@@ -1,0 +1,42 @@
+---
+apiVersion: "kustomize.config.k8s.io/v1beta1"
+kind: "Kustomization"
+namespace: "tailscale"
+
+# need to disable hash suffixing because of the secret
+generatorOptions:
+  disableNameSuffixHash: true
+
+commonLabels:
+  app: "tailscale"
+
+resources:
+  - "../../base"
+
+patchesStrategicMerge:
+  - "deployment-routes-patch.yml"
+
+patchesJson6902:
+  - path: "rbac-patch.yml"
+    target:
+      kind: "Role"
+      name: "tailscale"
+      version: "v1"
+      group: "rbac.authorization.k8s.io"
+
+configMapGenerator:
+  - name: "ts-routes"
+    literals:
+      - "TS_ROUTES=10.244.0.0/16,10.96.0.0/12"
+      # https://tailscale.com/kb/1185/kubernetes/
+      # for pod CIDR, use:
+      # kubectl get nodes -o jsonpath='{.items[*].spec.podCIDR}'
+      # for service CIDR, use:
+      # echo '{"apiVersion":"v1","kind":"Service","metadata":{"name":"tst"},"spec":{"clusterIP":"1.1.1.1","ports":[{"port":443}]}}' | kubectl apply -f - 2>&1 | sed 's/.*valid IPs is //'
+
+secretGenerator:
+  # https://vault.inthemainfra.me/ui/vault/secrets/kubernetes/show/tailscale-subnet-router/overlays/antioch
+  # don't forget to echo -n so no newline is printed
+  - name: "tailscale-auth"
+    files:
+      - "TS_AUTH_KEY=ephemeral-key.secret"
