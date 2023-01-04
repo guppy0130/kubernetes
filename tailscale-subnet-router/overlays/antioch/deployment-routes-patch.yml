@@ -1,0 +1,35 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "tailscale"
+spec:
+  selector:
+    matchLabels:
+      app: "tailscale"
+  template:
+    metadata:
+      labels:
+        app: "tailscale"
+    spec:
+      serviceAccountName: "tailscale"
+      containers:
+        - name: "tailscale"
+          image: "tailscale/tailscale:v1.34.1"
+          env:
+            - name: "TS_KUBE_SECRET"
+              value: "tailscale-auth"
+            - name: "TS_USERSPACE"
+              value: "true"
+            - name: "TS_AUTH_KEY"
+              valueFrom:
+                secretKeyRef:
+                  key: "TS_AUTH_KEY"
+                  name: "tailscale-auth"
+            - name: "TS_ROUTES"
+              valueFrom:
+                configMapKeyRef:
+                  key: "TS_ROUTES"
+                  name: "ts-routes"
+            - name: "TS_EXTRA_ARGS"
+              value: "--login-server https://headscale.inthemainfra.me"

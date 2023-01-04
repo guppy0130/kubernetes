@@ -1,0 +1,10 @@
+---
+# https://github.com/tailscale/tailscale/blob/main/docs/k8s/role.yaml
+- op: "add"
+  path: "/rules/-"
+  value:
+    apiGroups: [""] # "" indicates the core API group
+    # refers to secretGenerator
+    resourceNames: ["tailscale-auth"]
+    resources: ["secrets"]
+    verbs: ["get", "update", "patch"]
