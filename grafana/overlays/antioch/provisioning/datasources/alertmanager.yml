@@ -1,0 +1,12 @@
+---
+apiVersion: 1
+datasources:
+  - name: Alertmanager
+    type: alertmanager
+    url: "http://vmalertmanager-vmoperator-victoria-metrics-k8s-stack:9093"
+    orgId: 1
+    version: 1
+    editable: false
+    # https://community.grafana.com/t/adding-prometheus-alertmanager-in-grafana/69790/4
+    jsonData:
+      implementation: prometheus
