@@ -1,0 +1,19 @@
+---
+apiVersion: "networking.k8s.io/v1"
+kind: "Ingress"
+metadata:
+  name: "pihole"
+  labels:
+    name: "pihole"
+spec:
+  rules:
+    - host: "pihole.k3s.home"
+      http:
+        paths:
+          - pathType: "Prefix"
+            path: "/"
+            backend:
+              service:
+                name: "pihole"
+                port:
+                  name: "http"

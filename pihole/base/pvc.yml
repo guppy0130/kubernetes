@@ -1,0 +1,24 @@
+---
+apiVersion: "v1"
+kind: "PersistentVolumeClaim"
+metadata:
+  name: "pihole-data"
+spec:
+  resources:
+    requests:
+      storage: "64Mi"
+  volumeMode: "Filesystem"
+  accessModes:
+    - "ReadWriteOnce"
+---
+apiVersion: "v1"
+kind: "PersistentVolumeClaim"
+metadata:
+  name: "pihole-dnsmasq"
+spec:
+  resources:
+    requests:
+      storage: "64Mi"
+  volumeMode: "Filesystem"
+  accessModes:
+    - "ReadWriteOnce"

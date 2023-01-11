@@ -1,0 +1,54 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "pihole"
+spec:
+  strategy:
+    type: "Recreate" # has to release host ports
+  selector:
+    matchLabels:
+      app: "pihole"
+  template:
+    metadata:
+      labels:
+        app: "pihole"
+    spec:
+      hostNetwork: true
+      containers:
+        - name: "pihole"
+          image: "pihole/pihole:2022.12.1"
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 53
+              protocol: "TCP"
+              name: "dns-tcp"
+            - containerPort: 53
+              protocol: "UDP"
+              name: "dns-udp"
+            - containerPort: 8080
+              protocol: "TCP"
+              name: "http"
+          env:
+            - name: "TZ"
+              value: "America/Los_Angeles"
+            - name: "WEBPASSWORD"
+              value: "password"
+            - name: "WEB_PORT"
+              value: "8080"
+            - name: "DNSMASQ_LISTENING"
+              value: "all"
+          volumeMounts:
+            - mountPath: "/etc/pihole"
+              name: "pihole-data"
+            - mountPath: "/etc/dnsmasq.d"
+              name: "pihole-dnsmasq"
+      volumes:
+        - name: "pihole-data"
+          persistentVolumeClaim:
+            claimName: "pihole-data"
+        - name: "pihole-dnsmasq"
+          persistentVolumeClaim:
+            claimName: "pihole-dnsmasq"
