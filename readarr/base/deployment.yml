@@ -1,0 +1,46 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "readarr"
+spec:
+  strategy:
+    type: "Recreate"
+  selector:
+    matchLabels:
+      app: "readarr"
+  template:
+    metadata:
+      labels:
+        app: "readarr"
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: "readarr"
+          image: "linuxserver/readarr:nightly"
+          imagePullPolicy: "Always"
+          resources:
+            limits:
+              memory: "256Mi"
+              cpu: "250m"
+          ports:
+            - containerPort: 8787
+              name: "readarr-http"
+              protocol: "TCP"
+          env:
+            - name: "PUID"
+              value: "1000"
+            - name: "PGID"
+              value: "1000"
+          volumeMounts:
+            - mountPath: "/config"
+              name: "readarr-config"
+            - mountPath: "/data"
+              name: "media-pvc"
+      volumes:
+        - name: "readarr-config"
+          persistentVolumeClaim:
+            claimName: "readarr-config"
+        - name: "media-pvc"
+          persistentVolumeClaim:
+            claimName: "media-pvc"
