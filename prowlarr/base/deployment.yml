@@ -15,7 +15,8 @@ spec:
         fsGroup: 1000
       containers:
         - name: "prowlarr"
-          image: "linuxserver/prowlarr:develop-version-1.0.0.2171"
+          image: "linuxserver/prowlarr:nightly"
+          imagePullPolicy: "Always" # while in development
           resources:
             limits:
               memory: "512Mi"

@@ -11,3 +11,11 @@ resources:
 patchesStrategicMerge:
   - "deployment-preferences.yml"
   - "plex-config-pvc-patch.yml"
+
+patchesJson6902:
+  - target:
+      kind: "Deployment"
+      name: "plex"
+      version: "v1"
+      group: "apps"
+    path: "intel-quicksync-volume-patch.yml"
