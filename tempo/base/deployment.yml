@@ -17,7 +17,7 @@ spec:
       containers:
         - name: "tempo"
           image: "grafana/tempo:latest"
-          imagePullPolicy: "IfNotPresent"
+          imagePullPolicy: "Always"
           args:
             - "-target=scalable-single-binary"
             - "-config.file=/etc/tempo.yml"
