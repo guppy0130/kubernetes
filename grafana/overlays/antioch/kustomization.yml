@@ -6,7 +6,6 @@ commonLabels:
   app: "grafana"
 resources:
   - "../../base"
-  - "grafana-dashboards-pvc.yml"
 
 patchesStrategicMerge:
   - "deployment-patch-provisioning.yml"
@@ -19,4 +18,5 @@ configMapGenerator:
     files:
       - "provisioning/datasources/victoriametrics.yml"
       - "provisioning/datasources/loki.yml"
+      - "provisioning/datasources/alertmanager.yml"
       - "provisioning/dashboards/dashboard-provisioning.yml"

@@ -91,7 +91,7 @@ externalVM:
 
 # -- Configures vmsingle params
 vmsingle:
-  enabled: false
+  enabled: true
 
 vmcluster:
   enabled: false
@@ -235,7 +235,7 @@ vmagent:
       tag: v1.85.3
     scrapeInterval: 25s
     externalLabels:
-      cluster: talox-proxmox-cluster
+      cluster: antioch-k3s
     extraArgs:
       promscrape.streamParse: "true"
   ingress:
@@ -255,7 +255,7 @@ vmagent:
 #################################################
 # Grafana dependency chart configuration. For possible values refer to https://github.com/grafana/helm-charts/tree/main/charts/grafana#configuration
 grafana:
-  enabled: true
+  enabled: false
   ## all values for grafana helm chart can be specified here
   sidecar:
     datasources:

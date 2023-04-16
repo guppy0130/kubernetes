@@ -21,8 +21,6 @@ spec:
               subPath: "grafana.ini"
             - mountPath: "/etc/grafana/provisioning"
               name: "grafana-provisioning"
-            - mountPath: "/etc/grafana/provisioning/dashboards"
-              name: "grafana-dashboards"
       volumes:
         - name: "grafana-configmap"
           configMap:
@@ -35,6 +33,5 @@ spec:
                 path: "datasources/victoriametrics.yml"
               - key: "loki.yml"
                 path: "datasources/loki.yml"
-        - name: "grafana-dashboards"
-          persistentVolumeClaim:
-            claimName: "grafana-dashboards"
+              - key: "alertmanager.yml"
+                path: "datasources/alertmanager.yml"
