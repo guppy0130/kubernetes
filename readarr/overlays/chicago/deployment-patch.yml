@@ -1,0 +1,17 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "readarr"
+spec:
+  selector:
+    matchLabels:
+      app: "readarr"
+  template:
+    spec:
+      nodeName: "k3os-20356"
+      containers:
+        - name: "readarr"
+          env:
+            - name: "TZ"
+              value: "America/Chicago"
