@@ -5,6 +5,6 @@ metadata:
   name: "resource-quota"
 spec:
   hard:
-    cpu: 5
-    memory: 8Gi
+    cpu: 8
+    memory: 10Gi
     ephemeral-storage: 5Gi
