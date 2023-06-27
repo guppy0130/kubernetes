@@ -15,7 +15,7 @@ spec:
         fsGroup: 1000
       containers:
         - name: "radarr"
-          image: "linuxserver/radarr:4.2.4"
+          image: "linuxserver/radarr:4.5.2"
           resources:
             limits:
               memory: "512Mi"
