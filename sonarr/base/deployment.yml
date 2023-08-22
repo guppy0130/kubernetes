@@ -15,7 +15,7 @@ spec:
         fsGroup: 1000
       containers:
         - name: "sonarr"
-          image: "linuxserver/sonarr:develop-version-4.0.0.547"
+          image: "linuxserver/sonarr:develop"
           resources:
             limits:
               memory: "512Mi"
