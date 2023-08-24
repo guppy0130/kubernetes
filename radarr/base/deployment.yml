@@ -16,6 +16,7 @@ spec:
       containers:
         - name: "radarr"
           image: "linuxserver/radarr:latest"
+          imagePullPolicy: "Always"
           resources:
             limits:
               memory: "512Mi"

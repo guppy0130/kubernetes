@@ -16,6 +16,7 @@ spec:
       containers:
         - name: "sonarr"
           image: "linuxserver/sonarr:develop"
+          imagePullPolicy: "Always"
           resources:
             limits:
               memory: "512Mi"
