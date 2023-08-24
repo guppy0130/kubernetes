@@ -6,7 +6,7 @@ metadata:
 spec:
   resources:
     requests:
-      storage: "64Mi"
+      storage: "128Mi"
   volumeMode: "Filesystem"
   accessModes:
     - "ReadWriteOnce"
