@@ -17,7 +17,7 @@ spec:
       hostNetwork: true
       containers:
         - name: "homebridge"
-          image: "oznu/homebridge:2022-11-14"
+          image: "homebridge/homebridge:2023-11-28"
           volumeMounts:
             - mountPath: "/homebridge/config.json"
               name: "homebridge-config"
