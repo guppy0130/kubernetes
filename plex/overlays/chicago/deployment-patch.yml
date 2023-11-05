@@ -1,10 +1,14 @@
 ---
 - path: "/spec/template/spec/nodeName"
   op: "replace"
-  value: "k3s-node-3"
+  value: "k3os-20356"
 
 - path: "/spec/template/spec/containers/0/env/-"
   op: "add"
   value:
     name: "TZ"
     value: "America/Chicago"
+
+- op: "replace"
+  path: "/spec/template/spec/containers/0/image"
+  value: "ghcr.io/skjnldsv/docker-plex:nightly"
