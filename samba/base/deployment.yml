@@ -1,0 +1,47 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "samba"
+spec:
+  selector:
+    matchLabels:
+      app: "samba"
+  template:
+    metadata:
+      labels:
+        app: "samba"
+    spec:
+      securityContext:
+        fsGroup: 1000
+      containers:
+        - name: "samba"
+          image: "quay.io/samba.org/samba-server:latest"
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 445
+              name: "samba-tcp"
+              protocol: "TCP"
+          env:
+            # configmap
+            - name: "SAMBACC_CONFIG"
+              value: "/config/sambacc-configmap.json"
+            # in the configmap, index into .configs; this is one of those keys
+            - name: "SAMBA_CONTAINER_ID"
+              value: "default"
+          volumeMounts:
+            - mountPath: "/data"
+              name: "media-pvc"
+            - mountPath: "/config/sambacc-configmap.json"
+              name: "sambacc-configmap"
+              subPath: "sambacc-configmap.json"
+      volumes:
+        - name: "media-pvc"
+          persistentVolumeClaim:
+            claimName: "media-pvc"
+        - name: "sambacc-configmap"
+          configMap:
+            name: "sambacc-configmap"

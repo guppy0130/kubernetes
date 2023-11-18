@@ -1,0 +1,43 @@
+{
+  "samba-container-config": "v0",
+  "configs": {
+    "default": {
+      "shares": ["share"],
+      "globals": ["default"],
+      "instance_name": "SAMBA"
+    }
+  },
+  "shares": {
+    "share": {
+      "options": {
+        "path": "/data",
+        "valid users": "sambauser",
+        "force user": "sambauser",
+        "write list": "sambauser"
+      }
+    }
+  },
+  "globals": {
+    "default": {
+      "options": {
+        "security": "user",
+        "server min protocol": "SMB3",
+        "load printers": "no",
+        "printing": "bsd",
+        "printcap name": "/dev/null",
+        "disable spoolss": "yes",
+        "guest ok": "no",
+        "veto files": "/._*/.DS_Store/",
+        "delete veto files": "yes"
+      }
+    }
+  },
+  "users": {
+    "all_entries": [
+      {
+        "name": "sambauser",
+        "password": "samba"
+      }
+    ]
+  }
+}
