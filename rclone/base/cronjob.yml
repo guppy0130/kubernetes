@@ -1,0 +1,55 @@
+---
+apiVersion: "batch/v1"
+kind: "CronJob"
+metadata:
+  name: "rclone-gdrive-sync"
+spec:
+  schedule: "0 * * * *"
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: "Never"
+          securityContext:
+            fsGroup: 1000
+            runAsUser: 1000
+            runAsGroup: 1000
+          containers:
+            - name: "rclone"
+              image: "docker.io/rclone/rclone"
+              resources:
+                limits:
+                  memory: "128Mi"
+                  cpu: "500m"
+              envFrom:
+                - secretRef:
+                    name: "rclone-gdrive-sync-credentials"
+              volumeMounts:
+                - mountPath: "/data"
+                  name: "media-pvc"
+                - mountPath: "/config"
+                  name: "rclone-gdrive-sync-config"
+              command:
+                - "rclone"
+              args:
+                - "-v"
+                - "--drive-shared-with-me"
+                - "--checksum"
+                - "--inplace"
+                - "--update"
+                - "--config=/config/rclone.conf"
+                - "copy"
+                - "/data/book"
+                - "gdrive:ANH Share/eBooks"
+                - "--filter-from"
+                - "/data/book/rclone-filter.txt"
+          volumes:
+            - name: "media-pvc"
+              persistentVolumeClaim:
+                claimName: "media-pvc"
+                readOnly: true
+            - name: "rclone-gdrive-sync-config"
+              configMap:
+                name: "rclone-gdrive-sync-config"
