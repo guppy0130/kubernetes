@@ -8,5 +8,13 @@ commonLabels:
 resources:
   - "../../base"
 
-patchesStrategicMerge:
-  - "pvc.yml"
+patches:
+  - path: "pvc-patch.yml"
+    target:
+      name: "pihole-data"
+      kind: "PersistentVolumeClaim"
+
+  - path: "pvc-patch.yml"
+    target:
+      name: "pihole-dnsmasq"
+      kind: "PersistentVolumeClaim"
