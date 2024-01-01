@@ -7,7 +7,7 @@ image:
 
   # image.tag -- TopoLVM image tag to use.
   # @default -- `{{ .Chart.AppVersion }}`
-  tag: # 0.8.3
+  tag: # 0.18.1
 
   # image.pullPolicy -- TopoLVM image pullPolicy.
   pullPolicy: # Always
@@ -81,11 +81,6 @@ scheduler:
           - matchExpressions:
               - key: node-role.kubernetes.io/control-plane
                 operator: Exists
-          # node-role.kubernetes.io/master label is not used in k8s 1.24+.
-          # TODO: remove this when minimum supported version becomes 1.24.
-          - matchExpressions:
-              - key: node-role.kubernetes.io/master
-                operator: Exists
 
   podDisruptionBudget:
     # scheduler.podDisruptionBudget.enabled -- Specify podDisruptionBudget enabled.
@@ -98,11 +93,6 @@ scheduler:
       operator: Exists
     - key: node-role.kubernetes.io/control-plane
       effect: NoSchedule
-    # node-role.kubernetes.io/master taint will not be used in k8s 1.25+.
-    # cf. https://github.com/kubernetes/enhancements/blob/master/keps/sig-cluster-lifecycle/kubeadm/2067-rename-master-label-taint/README.md
-    # TODO: remove this when minimum supported version becomes 1.25.
-    - key: node-role.kubernetes.io/master
-      effect: NoSchedule
 
   # scheduler.nodeSelector -- Specify nodeSelector on the Deployment or DaemonSet.
   ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/
@@ -112,7 +102,7 @@ scheduler:
   priorityClassName:
 
   # scheduler.schedulerOptions -- Tune the Node scoring.
-  # ref: https://github.com/topolvm/topolvm/blob/master/deploy/README.md
+  # ref: https://github.com/topolvm/topolvm/blob/main/docs/topolvm-scheduler.md
   schedulerOptions: {}
   #  default-divisor: 1
   #  divisors:
