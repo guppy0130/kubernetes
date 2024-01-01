@@ -1,16 +1,6 @@
 ---
-apiVersion: "apps/v1"
-kind: "Deployment"
-metadata:
-  name: "radarr"
-spec:
-  selector:
-    matchLabels:
-      app: "radarr"
-  template:
-    spec:
-      containers:
-        - name: "radarr"
-          env:
-            - name: "TZ"
-              value: "America/Los_Angeles"
+- path: "/spec/template/spec/containers/0/env/-"
+  op: "add"
+  value:
+    name: "TZ"
+    value: "America/Los_Angeles"

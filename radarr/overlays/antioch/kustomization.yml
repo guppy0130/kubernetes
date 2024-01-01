@@ -5,9 +5,15 @@ namespace: "media"
 commonLabels:
   app: "radarr"
 
-patchesStrategicMerge:
-  - "deployment-patch.yml"
-  - "pvc-config.yml"
+patches:
+  - path: "deployment-patch.yml"
+    target:
+      name: "radarr"
+      kind: "Deployment"
+  - path: "pvc-patch.yml"
+    target:
+      name: "radarr-config"
+      kind: "PersistentVolumeClaim"
 
 resources:
   - "../../base"
