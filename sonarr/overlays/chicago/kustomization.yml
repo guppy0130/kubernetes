@@ -5,8 +5,10 @@ namespace: "media"
 commonLabels:
   app: "sonarr"
 
-patchesStrategicMerge:
-  - "deployment-patch.yml"
+patches:
+  - path: "deployment-patch.yml"
+    target:
+      kind: "Deployment"
 
 resources:
   - "../../base"

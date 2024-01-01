@@ -5,9 +5,13 @@ namespace: "media"
 commonLabels:
   app: "sonarr"
 
-patchesStrategicMerge:
-  - "deployment-patch.yml"
-  - "pvc-config.yml"
+patches:
+  - path: "deployment-patch.yml"
+    target:
+      kind: "Deployment"
+  - path: "pvc-patch.yml"
+    target:
+      kind: "PersistentVolumeClaim"
 
 resources:
   - "../../base"
