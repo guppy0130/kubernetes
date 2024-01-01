@@ -16,12 +16,13 @@ spec:
         fsGroup: 1000
       containers:
         - name: "transmission-openvpn"
-          image: "haugene/transmission-openvpn:4.3.2"
+          image: "haugene/transmission-openvpn:5.3.1"
           securityContext:
-            allowPrivilegeEscalation: true
             capabilities:
               add:
                 - "NET_ADMIN"
+            # cap add NET_ADMIN is insufficient; you must allow escalation
+            allowPrivilegeEscalation: true
             privileged: true
           env:
             - name: "PUID"
