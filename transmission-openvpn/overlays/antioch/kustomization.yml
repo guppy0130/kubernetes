@@ -8,8 +8,10 @@ commonLabels:
 resources:
   - "../../base"
 
-patchesStrategicMerge:
-  - "deployment-patch.yml"
+patches:
+  - path: "deployment-patch.yml"
+    target:
+      kind: "Deployment"
 
 secretGenerator:
   - name: "vpn-credentials"
