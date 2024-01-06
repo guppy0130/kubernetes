@@ -8,10 +8,13 @@ commonLabels:
 resources:
   - "../../base"
 
-patchesStrategicMerge:
-  - "deployment-preferences.yml"
+patches:
+  - patch: "deployment-patch.yml"
+    target:
+      kind: "Deployment"
+      name: "plex"
 
-configMapGenerator:
-  - name: "plex-preferences-xml"
-    files:
-      - "Preferences.xml=Preferences.xml.secret"
+# configMapGenerator:
+#   - name: "plex-preferences-xml"
+#     files:
+#       - "Preferences.xml=Preferences.xml.secret"

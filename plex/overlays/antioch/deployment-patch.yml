@@ -1,0 +1,12 @@
+---
+- path: "/spec/template/spec/containers/0/env/-"
+  op: "add"
+  value:
+    name: "PLEX_MEDIA_SERVER_USE_SYSLOG"
+    value: "true"
+
+- path: "/spec/template/spec/containers/0/env/-"
+  op: "add"
+  value:
+    name: "TZ"
+    value: "America/Los_Angeles"

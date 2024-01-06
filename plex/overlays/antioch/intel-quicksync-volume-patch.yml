@@ -11,3 +11,9 @@
   value:
     name: "intel-quicksync"
     mountPath: "/dev/dri"
+
+# for some reason, we don't get hw transcode unless you escalate here
+- op: "add"
+  path: "/spec/template/spec/containers/0/securityContext"
+  value:
+    privileged: true

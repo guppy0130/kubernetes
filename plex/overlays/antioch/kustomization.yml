@@ -8,14 +8,16 @@ commonLabels:
 resources:
   - "../../base"
 
-patchesStrategicMerge:
-  - "deployment-preferences.yml"
-  - "plex-config-pvc-patch.yml"
-
-patchesJson6902:
-  - target:
+patches:
+  - path: "deployment-patch.yml"
+    target:
       kind: "Deployment"
       name: "plex"
-      version: "v1"
-      group: "apps"
-    path: "intel-quicksync-volume-patch.yml"
+  - path: "intel-quicksync-volume-patch.yml"
+    target:
+      kind: "Deployment"
+      name: "plex"
+  - path: "plex-config-pvc-patch.yml"
+    target:
+      kind: "PersistentVolumeClaim"
+      name: "plex-config-pvc"
