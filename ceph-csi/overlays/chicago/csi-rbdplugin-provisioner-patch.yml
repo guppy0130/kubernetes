@@ -1,0 +1,21 @@
+---
+# commented out because drivernamespace causes it to explode
+# - path: "/spec/template/spec/containers/4/args"
+#   op: "replace"
+#   value:
+#     - "--type=controller"
+#     # we're overriding the --v=5 from upstream to --v=1 to reduce spam
+#     # https://github.com/kubernetes/kubernetes/issues/34594
+#     - "--v=1"
+#     - "--drivername=rbd.csi.ceph.com"
+#     - "--drivernamespace=$(DRIVER_NAMESPACE)"
+#     - "--setmetadata=true"
+
+# stable releases
+- path: "/spec/template/spec/containers/4/image"
+  op: "replace"
+  value: "quay.io/cephcsi/cephcsi:v3.10.1"
+
+- path: "/spec/replicas"
+  op: "replace"
+  value: 1

@@ -5,21 +5,26 @@ resources:
   - "../../base"
 
 configMapGenerator:
-  # https://vault.inthemainfra.me/ui/vault/secrets/kubernetes/show/ceph-csi
+  # https://vault.inthemainfra.me/ui/vault/secrets/chicago/kv/proxmox%2Fceph
   - name: "ceph-csi-config"
     behavior: "replace"
     files:
       - "config.json=ceph-csi-config.json"
 
 secretGenerator:
-  # https://vault.inthemainfra.me/ui/vault/secrets/kubernetes/show/ceph-csi
+  # https://vault.inthemainfra.me/ui/vault/secrets/chicago/kv/proxmox%2Fceph
   - name: "csi-rbd-secret"
     behavior: "merge"
     files:
       - "userKey=csi-rbd-userkey.secret"
 
-patchesStrategicMerge:
-  # https://vault.inthemainfra.me/ui/vault/secrets/kubernetes/show/ceph-csi
-  - "csi-rbdplugin-storage-class.yml"
-  # view this file to see changes
-  - "csi-rbdplugin-provisioner.yml"
+patches:
+  # https://vault.inthemainfra.me/ui/vault/secrets/chicago/kv/proxmox%2Fceph
+  - path: "csi-rbdplugin-storage-class-patch.yml"
+    target:
+      kind: "StorageClass"
+      name: "csi-rbd-sc"
+  - path: "csi-rbdplugin-provisioner-patch.yml"
+    target:
+      kind: "Deployment"
+      name: "csi-rbdplugin-provisioner"
