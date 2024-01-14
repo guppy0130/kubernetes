@@ -1,0 +1,9 @@
+---
+- path: "/spec/resources/requests/storage"
+  op: "replace"
+  value: "3Ti"
+
+# import existing pvc
+- path: "/spec/volumeName"
+  op: "replace"
+  value: "media-pvc"

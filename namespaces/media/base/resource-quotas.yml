@@ -7,4 +7,3 @@ spec:
   hard:
     cpu: 8
     memory: 10Gi
-    ephemeral-storage: 5Gi

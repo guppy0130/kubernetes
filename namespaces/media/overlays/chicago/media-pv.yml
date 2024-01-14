@@ -1,0 +1,71 @@
+---
+# manually import pv from before we blew up the cluster
+# https://github.com/ceph/ceph-csi/issues/2573#issuecomment-944234288
+# https://github.com/ceph/ceph-csi/blob/devel/docs/static-pvc.md#create-rbd-static-pv
+#
+# get some details on the rbd with:
+# root@proxmox1:~# rbd info kubernetes/csi-vol-cab1cad4-058c-462e-969e-336b80a07701
+
+apiVersion: "v1"
+kind: "PersistentVolume"
+metadata:
+  annotations:
+    pv.kubernetes.io/provisioned-by: "rbd.csi.ceph.com"
+    # the pvc-generated example had these annotations
+    volume.kubernetes.io/provisioner-deletion-secret-name: "csi-rbd-secret"
+    volume.kubernetes.io/provisioner-deletion-secret-namespace: "default"
+  finalizers:
+    # what does this one do?
+    - "external-provisioner.volume.kubernetes.io/finalizer"
+    - "kubernetes.io/pv-protection"
+  name: "media-pvc"
+spec:
+  capacity:
+    storage: "3Ti"
+  volumeMode: "Filesystem"
+  accessModes:
+    - "ReadWriteOnce"
+  # please don't delete yourself
+  persistentVolumeReclaimPolicy: "Retain"
+  storageClassName: "csi-rbd-sc"
+  claimRef:
+    apiVersion: "v1"
+    kind: "PersistentVolumeClaim"
+    name: "media-pvc"
+    namespace: "media"
+  csi:
+    controllerExpandSecretRef:
+      # these come from `ceph-csi/*`
+      name: "csi-rbd-provisioner"
+      namespace: "default"
+    driver: "rbd.csi.ceph.com"
+    fsType: "ext4"
+    nodeStageSecretRef:
+      # these come from `ceph-csi/*`
+      name: "csi-rbd-secret"
+      namespace: "default"
+    volumeAttributes:
+      # check `ceph-csi/overlays/*/csi-rbdplugin-storage-class-patch.yml`
+      # or `ceph-csi/overlays/*/ceph-csi-config.yml`
+      clusterID: "a05891f1-8170-4f0b-bcc0-37ccbfdf1f69"
+      imageFeatures: "layering"
+      # from `rbd-info`
+      imageName: "csi-vol-cab1cad4-058c-462e-969e-336b80a07701"
+      # rbd pool name (check `ceph-csi/base/csi-rbdplugin-storage-class.yml`)
+      journalPool: "kubernetes"
+      # rbd pool name (check `ceph-csi/base/csi-rbdplugin-storage-class.yml`)
+      pool: "kubernetes"
+      # get this by generating a pvc from kubernetes and then reusing its value.
+      # it's specific to the CSI provisioner only (does not vary between PVs
+      # made by the same provisioner).
+      storage.kubernetes.io/csiProvisionerIdentity: "1705186192112-9602-rbd.csi.ceph.com"
+      thickProvision: "false"
+      # we've commented this because we'd like to _not_ delete this rbd even if
+      # we delete it from kubernetes.
+      # TODO: sane backup mechanism for this huge pvc.
+      # imageid: 74b118bb4610ec
+    # https://github.com/ceph/ceph-csi/blob/200fbdbf28591c404a85888d8bfc9561fa23dbb8/internal/util/volid.go#L60-L72
+    # we've set the second part to be `0024` instead of `0004` because when we
+    # created a pvc from kubernetes, `0024` was the value it generated.
+    # <version>-<size_of_cluster_id>-<cluster_id>-<rbd_pool_index>-rbd_id>
+    volumeHandle: "0001-0024-a05891f1-8170-4f0b-bcc0-37ccbfdf1f69-0000000000000005-cab1cad4-058c-462e-969e-336b80a07701"
