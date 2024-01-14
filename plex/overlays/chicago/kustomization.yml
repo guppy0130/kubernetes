@@ -6,10 +6,15 @@ commonLabels:
   app: "plex"
 
 resources:
+  - "plex-config-pv.yml"
   - "../../base"
 
 patches:
-  - patch: "deployment-patch.yml"
+  - path: "deployment-patch.yml"
+    target:
+      kind: "Deployment"
+      name: "plex"
+  - path: "hardware-transcode-volume-patch.yml"
     target:
       kind: "Deployment"
       name: "plex"

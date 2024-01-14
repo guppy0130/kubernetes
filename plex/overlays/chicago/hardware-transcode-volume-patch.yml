@@ -1,0 +1,19 @@
+---
+- op: "add"
+  path: "/spec/template/spec/volumes/-"
+  value:
+    name: "hardware-transcode"
+    hostPath:
+      path: "/dev/dri"
+
+- op: "add"
+  path: "/spec/template/spec/containers/0/volumeMounts/-"
+  value:
+    name: "hardware-transcode"
+    mountPath: "/dev/dri"
+
+# for some reason, we don't get hw transcode unless you escalate here
+- op: "add"
+  path: "/spec/template/spec/containers/0/securityContext"
+  value:
+    privileged: true
