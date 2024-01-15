@@ -6,6 +6,6 @@ commonLabels:
   app: "plex"
 resources:
   - "deployment.yml"
-  # - "service.yml"
-  # - "ingress.yml"
+  - "service.yml"
+  - "ingress.yml"
   - "plex-config-pvc.yml"

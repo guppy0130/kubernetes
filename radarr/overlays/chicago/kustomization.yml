@@ -5,11 +5,12 @@ namespace: "media"
 commonLabels:
   app: "radarr"
 
+resources:
+  - "radarr-config-pv.yml"
+  - "../../base"
+
 patches:
   - path: "deployment-patch.yml"
     target:
       name: "radarr"
       kind: "Deployment"
-
-resources:
-  - "../../base"

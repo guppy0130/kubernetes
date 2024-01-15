@@ -3,8 +3,8 @@
   op: "add"
   value:
     name: "TZ"
-    value: "America/Los_Angeles"
+    value: "America/Chicago"
 
 - path: "/spec/template/spec/nodeName"
   op: "replace"
-  value: "k3os-20356"
+  value: "k3s-node-2"

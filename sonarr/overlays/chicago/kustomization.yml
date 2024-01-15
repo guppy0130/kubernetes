@@ -5,10 +5,11 @@ namespace: "media"
 commonLabels:
   app: "sonarr"
 
+resources:
+  - "sonarr-config-pv.yml"
+  - "../../base"
+
 patches:
   - path: "deployment-patch.yml"
     target:
       kind: "Deployment"
-
-resources:
-  - "../../base"

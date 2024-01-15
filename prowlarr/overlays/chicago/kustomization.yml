@@ -5,8 +5,11 @@ namespace: "media"
 commonLabels:
   app: "prowlarr"
 
-patchesStrategicMerge:
-  - "deployment-patch.yml"
-
 resources:
+  - "prowlarr-config-pv.yml"
   - "../../base"
+
+patches:
+  - path: "deployment-patch.yml"
+    target:
+      kind: "Deployment"

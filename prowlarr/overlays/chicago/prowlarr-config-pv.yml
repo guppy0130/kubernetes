@@ -1,0 +1,43 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  annotations:
+    pv.kubernetes.io/provisioned-by: rbd.csi.ceph.com
+    volume.kubernetes.io/provisioner-deletion-secret-name: csi-rbd-secret
+    volume.kubernetes.io/provisioner-deletion-secret-namespace: default
+  finalizers:
+    - external-provisioner.volume.kubernetes.io/finalizer
+    - kubernetes.io/pv-protection
+  name: prowlarr-config
+spec:
+  capacity:
+    storage: 1Gi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: csi-rbd-sc
+  claimRef:
+    apiVersion: v1
+    kind: PersistentVolumeClaim
+    name: prowlarr-config
+    namespace: media
+  csi:
+    controllerExpandSecretRef:
+      name: csi-rbd-provisioner
+      namespace: default
+    driver: rbd.csi.ceph.com
+    fsType: ext4
+    nodeStageSecretRef:
+      name: csi-rbd-secret
+      namespace: default
+    volumeAttributes:
+      clusterID: a05891f1-8170-4f0b-bcc0-37ccbfdf1f69
+      imageFeatures: layering
+      imageName: csi-vol-8b2d56f2-b68b-408c-a27d-ccfc4b4d73d0
+      journalPool: kubernetes
+      pool: kubernetes
+      storage.kubernetes.io/csiProvisionerIdentity: 1705186192112-9602-rbd.csi.ceph.com
+      thickProvision: 'false'
+    volumeHandle: 0001-0024-a05891f1-8170-4f0b-bcc0-37ccbfdf1f69-0000000000000005-8b2d56f2-b68b-408c-a27d-ccfc4b4d73d0

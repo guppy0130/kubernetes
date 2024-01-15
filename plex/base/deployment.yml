@@ -14,7 +14,7 @@ spec:
       labels:
         app: "plex"
     spec:
-      hostNetwork: true
+      # hostNetwork: true
       securityContext:
         fsGroup: 1000
         # runAsNonRoot: true
@@ -34,25 +34,25 @@ spec:
               value: "1000"
             - name: "VERSION"
               value: "docker"
-          # ports:
-            # - containerPort: 32400
-            #   name: "plex-http"
-            #   protocol: "TCP"
-            # - containerPort: 5353
-            #   name: "plex-bonjour"
-            #   protocol: "UDP"
-            # - containerPort: 32410
-            #   name: "plex-gday-1"
-            #   protocol: "UDP"
-            # - containerPort: 32412
-            #   name: "plex-gday-2"
-            #   protocol: "UDP"
-            # - containerPort: 32413
-            #   name: "plex-gday-3"
-            #   protocol: "UDP"
-            # - containerPort: 32414
-            #   name: "plex-gday-4"
-            #   protocol: "UDP"
+          ports:
+            - containerPort: 32400
+              name: "plex-http"
+              protocol: "TCP"
+            - containerPort: 5353
+              name: "plex-bonjour"
+              protocol: "UDP"
+            - containerPort: 32410
+              name: "plex-gday-1"
+              protocol: "UDP"
+            - containerPort: 32412
+              name: "plex-gday-2"
+              protocol: "UDP"
+            - containerPort: 32413
+              name: "plex-gday-3"
+              protocol: "UDP"
+            - containerPort: 32414
+              name: "plex-gday-4"
+              protocol: "UDP"
           volumeMounts:
             - mountPath: "/config"
               name: "plex-config-pvc"

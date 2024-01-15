@@ -4,6 +4,7 @@ kind: "Kustomization"
 namespace: "media"
 commonLabels:
   app: "samba"
+
 resources:
   - "deployment.yml"
   - "service.yml"

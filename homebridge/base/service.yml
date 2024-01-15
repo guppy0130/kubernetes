@@ -11,16 +11,16 @@ spec:
       name: "homebridge-http"
       targetPort: 8581
       protocol: "TCP"
----
-apiVersion: "v1"
-kind: "Service"
-metadata:
-  name: "homebridge-mdns"
-spec:
-  type: "NodePort"
-  selector:
-    app: "homebridge"
-  ports:
-    - port: 5353
-      name: "homebridge-mdns"
-      protocol: "UDP"
+# ---
+# apiVersion: "v1"
+# kind: "Service"
+# metadata:
+#   name: "homebridge-mdns"
+# spec:
+#   type: "NodePort"
+#   selector:
+#     app: "homebridge"
+#   ports:
+#     - port: 5353
+#       name: "homebridge-mdns"
+#       protocol: "UDP"

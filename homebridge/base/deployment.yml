@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: "homebridge"
-          image: "oznu/homebridge:2022-11-14"
+          image: "homebridge/homebridge:2024-01-08"
           # avahi present by default, turn it off (use ciao)
           # https://github.com/oznu/docker-homebridge/issues/437
           env:
@@ -27,9 +27,9 @@ spec:
             - containerPort: 8581
               name: "homebridge-http"
               protocol: "TCP"
-            - containerPort: 5353
-              name: "homebridge-mdns"
-              protocol: "UDP"
+          #   - containerPort: 5353
+          #     name: "homebridge-mdns"
+          #     protocol: "UDP"
           volumeMounts:
             - mountPath: "/homebridge/auth.json"
               name: "homebridge-auth"

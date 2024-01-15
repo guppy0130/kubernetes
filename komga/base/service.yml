@@ -7,5 +7,5 @@ spec:
   selector:
     app: "komga"
   ports:
-    - port: 8080
-      targetPort: 8080
+    - port: 25600
+      targetPort: 25600

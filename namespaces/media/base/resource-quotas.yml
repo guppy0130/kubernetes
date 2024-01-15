@@ -6,4 +6,4 @@ metadata:
 spec:
   hard:
     cpu: 13
-    memory: 10Gi
+    memory: 11Gi

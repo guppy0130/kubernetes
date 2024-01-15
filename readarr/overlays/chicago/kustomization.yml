@@ -5,8 +5,11 @@ namespace: "media"
 commonLabels:
   app: "readarr"
 
-patchesStrategicMerge:
-  - "deployment-patch.yml"
-
 resources:
+  - "readarr-config-pv.yml"
   - "../../base"
+
+patches:
+  - path: "deployment-patch.yml"
+    target:
+      kind: "Deployment"

@@ -18,13 +18,14 @@ spec:
         fsGroup: 1000
       containers:
         - name: "komga"
-          image: "gotson/komga:0.157.5"
+          image: "gotson/komga:1.10.1"
           resources:
             limits:
               memory: "500Mi"
               cpu: "250m"
+          env: []
           ports:
-            - containerPort: 8080
+            - containerPort: 25600
           volumeMounts:
             - mountPath: "/config"
               name: "komga-config"
@@ -32,13 +33,13 @@ spec:
               name: "media-pvc"
           startupProbe:
             httpGet:
-              port: 8080
+              port: 25600
             initialDelaySeconds: 150
             failureThreshold: 20
             periodSeconds: 1
           livenessProbe:
             httpGet:
-              port: 8080
+              port: 25600
             failureThreshold: 5
             periodSeconds: 2
       volumes:

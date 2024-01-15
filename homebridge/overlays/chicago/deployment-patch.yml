@@ -1,0 +1,41 @@
+---
+# you need to recreate so that the RWO PVC works
+- path: "/spec/strategy/type"
+  op: "replace"
+  value: "Recreate"
+
+# you need to use the host's networking stack to publish mDNS packets.
+- path: "/spec/template/spec/hostNetwork"
+  op: "replace"
+  value: true
+
+# pass in the JSON config
+- path: "/spec/template/spec/containers/0/volumeMounts/-"
+  op: "add"
+  value:
+    mountPath: "/homebridge/config.json"
+    name: "homebridge-config"
+    subPath: "config.json"
+
+- path: "/spec/template/spec/volumes/-"
+  op: "add"
+  value:
+    name: "homebridge-config"
+    configMap:
+      name: "homebridge-config"
+
+# and the packages.json
+- path: "/spec/template/spec/containers/0/volumeMounts/-"
+  op: "add"
+  value:
+    mountPath: "/homebridge/package.json"
+    name: "homebridge-plugins"
+    subPath: "package.json"
+
+
+- path: "/spec/template/spec/volumes/-"
+  op: "add"
+  value:
+    name: "homebridge-plugins"
+    configMap:
+      name: "homebridge-plugins"

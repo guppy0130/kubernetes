@@ -5,8 +5,11 @@ namespace: "media"
 commonLabels:
   app: "komga"
 
-patchesStrategicMerge:
-  - "deployment-patch.yml"
-
 resources:
   - "../../base"
+  - "komga-config-pv.yml"
+
+patches:
+  - path: "deployment-patch.yml"
+    target:
+      kind: "Deployment"

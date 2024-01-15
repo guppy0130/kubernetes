@@ -1,14 +1,10 @@
 ---
-apiVersion: "apps/v1"
-kind: "Deployment"
-metadata:
-  name: "komga"
-spec:
-  selector:
-    matchLabels:
-      app: "komga"
-  template:
-    spec:
-      nodeName: "k3os-20356"
-      containers:
-        - name: "komga"
+- path: "/spec/template/spec/containers/0/env/-"
+  op: "add"
+  value:
+    name: "TZ"
+    value: "America/Chicago"
+
+- path: "/spec/template/spec/nodeName"
+  op: "replace"
+  value: "k3s-node-2"

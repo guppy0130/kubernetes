@@ -6,3 +6,7 @@
         name: "transmission-config"
     - secretRef:
         name: "vpn-credentials"
+
+- path: "/spec/template/spec/nodeName"
+  op: "replace"
+  value: "k3s-node-2"
