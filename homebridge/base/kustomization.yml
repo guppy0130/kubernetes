@@ -9,7 +9,6 @@ resources:
   - "deployment.yml"
   - "service.yml"
   - "ingress.yml"
-  - "persist-pvc.yml"
 
 configMapGenerator:
   - name: "homebridge-auth"

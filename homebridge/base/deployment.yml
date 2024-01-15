@@ -13,6 +13,8 @@ spec:
     type: "Recreate"
   template:
     spec:
+      # you need to use the host's networking stack to publish mDNS packets.
+      hostNetwork: true
       containers:
         - name: "homebridge"
           image: "homebridge/homebridge:2024-01-08"
@@ -21,8 +23,6 @@ spec:
           env:
             - name: "ENABLE_AVAHI"
               value: "0"
-            - name: "TZ"
-              value: "America/Chicago"
           ports:
             - containerPort: 8581
               name: "homebridge-http"

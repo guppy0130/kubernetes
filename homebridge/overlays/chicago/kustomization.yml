@@ -8,6 +8,7 @@ commonLabels:
 resources:
   - "../../base"
   - "homebridge-persist-pv.yml"
+  - "homebridge-persist-pvc.yml"
 
 patches:
   - path: "deployment-patch.yml"

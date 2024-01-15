@@ -9,13 +9,14 @@ resources:
   - "../../base"
   - "pvc.yml"
 
-patchesStrategicMerge:
-  - "deployment-patch-provisioning.yml"
-  - "persist-pvc-patch.yml"
+patches:
+  - path: "deployment-patch-provisioning.yml"
+    target:
+      kind: "Deployment"
 
 configMapGenerator:
   []
-  # https://vault.inthemainfra.me/ui/vault/secrets/kubernetes/show/homebridge/overlays/antioch/homebridge-config/config.json
+  # https://vault.inthemainfra.me/ui/vault/secrets/kubernetes/kv/homebridge%2Foverlays%2Fantioch%2Fhomebridge-config
   # - name: "homebridge-config"
   #   files:
   #     - "config.json=homebridge-config/config.secret"

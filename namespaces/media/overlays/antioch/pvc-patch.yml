@@ -1,0 +1,8 @@
+---
+- path: "/spec/resources/requests/storage"
+  op: "replace"
+  value: "13Ti"
+
+- path: "/spec/storageClassName"
+  op: "replace"
+  value: "topolvm-hdd-ext4"

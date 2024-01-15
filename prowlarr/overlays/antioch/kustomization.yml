@@ -5,9 +5,14 @@ namespace: "media"
 commonLabels:
   app: "prowlarr"
 
-patchesStrategicMerge:
-  - "deployment-patch.yml"
-  - "pvc-config.yml"
-
 resources:
   - "../../base"
+
+patches:
+  - path: "deployment-patch.yml"
+    target:
+      kind: "Deployment"
+  - path: "pvc-config.yml"
+    target:
+      kind: "PersistentVolumeClaim"
+      name: "prowlarr-config"

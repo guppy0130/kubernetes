@@ -1,0 +1,20 @@
+---
+- path: "/spec/template/spec/containers/0/env/-"
+  op: "add"
+  value:
+    name: "TZ"
+    value: "America/Los_Angeles"
+
+# writable pvc for everything?
+- path: "/spec/template/spec/containers/0/volumeMounts"
+  op: "replace"
+  value:
+    - mountPath: "/homebridge"
+      name: "homebridge-pvc"
+
+- path: "/spec/template/spec/volumes"
+  op: "replace"
+  value:
+    - name: "homebridge-pvc"
+      persistentVolumeClaim:
+        claimName: "homebridge-pvc"

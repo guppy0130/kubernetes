@@ -1,13 +1,9 @@
 ---
-# you need to recreate so that the RWO PVC works
-- path: "/spec/strategy/type"
-  op: "replace"
-  value: "Recreate"
-
-# you need to use the host's networking stack to publish mDNS packets.
-- path: "/spec/template/spec/hostNetwork"
-  op: "replace"
-  value: true
+- path: "/spec/template/spec/containers/0/env/-"
+  op: "add"
+  value:
+    name: "TZ"
+    value: "America/Chicago"
 
 # pass in the JSON config
 - path: "/spec/template/spec/containers/0/volumeMounts/-"
