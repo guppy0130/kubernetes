@@ -1,0 +1,17 @@
+---
+apiVersion: "networking.k8s.io/v1"
+kind: "Ingress"
+metadata:
+  name: "esp8266-dash-server"
+spec:
+  rules:
+    - host: "esp8266-dash-server.k3s.home"
+      http:
+        paths:
+          - path: "/"
+            pathType: "Prefix"
+            backend:
+              service:
+                name: "esp8266-dash-server"
+                port:
+                  number: 8000
