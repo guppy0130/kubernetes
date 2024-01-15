@@ -7,12 +7,15 @@ commonLabels:
 
 resources:
   - "../../base"
-  - "pvc.yml"
 
 patches:
   - path: "deployment-patch-provisioning.yml"
     target:
       kind: "Deployment"
+  - path: "pvc-patch.yml"
+    target:
+      kind: "PersistentVolumeClaim"
+      name: "homebridge-pvc"
 
 configMapGenerator:
   []

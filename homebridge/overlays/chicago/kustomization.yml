@@ -7,19 +7,21 @@ commonLabels:
 
 resources:
   - "../../base"
-  - "homebridge-persist-pv.yml"
-  - "homebridge-persist-pvc.yml"
 
 patches:
   - path: "deployment-patch.yml"
     target:
       kind: "Deployment"
+  - path: "pvc-patch.yml"
+    target:
+      kind: "PersistentVolumeClaim"
+      name: "homebridge-pvc"
 
 configMapGenerator:
   # https://vault.inthemainfra.me/ui/vault/secrets/kubernetes/show/homebridge/overlays/chicago/homebridge-config/config.json
   - name: "homebridge-config"
     files:
-      - "config.json=homebridge-config/config.secret"
+      - "config.json=homebridge-config/config.secret.json"
   - name: "homebridge-plugins"
     files:
       - "homebridge-config/package.json"

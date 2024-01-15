@@ -10,4 +10,4 @@ spec:
   volumeMode: "Filesystem"
   accessModes:
     - "ReadWriteOnce"
-  storageClassName: "topolvm-nvme-ext4"
+  storageClassName: ""

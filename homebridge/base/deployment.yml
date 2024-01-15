@@ -31,11 +31,11 @@ spec:
           #     name: "homebridge-mdns"
           #     protocol: "UDP"
           volumeMounts:
+            - mountPath: "/homebridge"
+              name: "homebridge-pvc"
             - mountPath: "/homebridge/auth.json"
               name: "homebridge-auth"
               subPath: "auth.json"
-            - mountPath: "/homebridge/persist"
-              name: "homebridge-persist"
           resources:
             requests:
               cpu: "250m"
@@ -44,9 +44,9 @@ spec:
               cpu: "1"
               memory: "2Gi"
       volumes:
+        - name: "homebridge-pvc"
+          persistentVolumeClaim:
+            claimName: "homebridge-pvc"
         - name: "homebridge-auth"
           configMap:
             name: "homebridge-auth"
-        - name: "homebridge-persist"
-          persistentVolumeClaim:
-            claimName: "homebridge-persist-pvc"
