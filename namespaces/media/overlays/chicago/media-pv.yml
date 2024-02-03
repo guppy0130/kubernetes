@@ -36,7 +36,7 @@ spec:
   csi:
     controllerExpandSecretRef:
       # these come from `ceph-csi/*`
-      name: "csi-rbd-provisioner"
+      name: "csi-rbd-secret"
       namespace: "default"
     driver: "rbd.csi.ceph.com"
     fsType: "ext4"
