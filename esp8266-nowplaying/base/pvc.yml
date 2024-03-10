@@ -1,0 +1,11 @@
+apiVersion: "v1"
+kind: "PersistentVolumeClaim"
+metadata:
+  name: "esp8266-nowplaying-spotify-cache"
+spec:
+  resources:
+    requests:
+      storage: "32Mi"
+  volumeMode: "Filesystem"
+  accessModes:
+    - "ReadWriteOnce"

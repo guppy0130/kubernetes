@@ -1,0 +1,12 @@
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "esp8266-nowplaying"
+spec:
+  ports:
+    - port: 3000
+      protocol: "TCP"
+      name: "esp8266-nowplay"
+  selector:
+    app: "esp8266-nowplaying"
