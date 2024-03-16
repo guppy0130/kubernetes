@@ -1,7 +1,7 @@
 ---
 - path: "/spec/template/spec/nodeName"
   op: "add"
-  value: "k3s-node-2"
+  value: "k3s-node-3"
 
 - path: "/spec/template/spec/containers/0/env/-"
   op: "add"

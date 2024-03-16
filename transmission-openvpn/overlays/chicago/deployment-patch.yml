@@ -9,4 +9,4 @@
 
 - path: "/spec/template/spec/nodeName"
   op: "replace"
-  value: "k3s-node-2"
+  value: "k3s-node-3"

@@ -1,18 +1,10 @@
 ---
 - path: "/spec/template/spec/nodeName"
   op: "replace"
-  value: "k3s-node-2"
+  value: "k3s-node-3"
 
 - path: "/spec/template/spec/containers/0/env/-"
   op: "add"
   value:
     name: "TZ"
     value: "America/Chicago"
-
-- path: "/spec/template/spec/containers/0/resources/limits/cpu"
-  op: "replace"
-  value: 10
-
-- path: "/spec/template/spec/containers/0/resources/limits/memory"
-  op: "replace"
-  value: "7Gi"

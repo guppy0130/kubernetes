@@ -1,4 +1,4 @@
 ---
 - op: "add"
   path: "/spec/jobTemplate/spec/template/spec/nodeName"
-  value: "k3s-node-2"
+  value: "k3s-node-3"
