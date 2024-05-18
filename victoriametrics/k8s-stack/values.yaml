@@ -169,37 +169,37 @@ alertmanager:
         - matchers:
             - alertname = KubePersistentVolumeInodesFillingUp
           receiver: null
+        # silence vm config reload failure, not sure why this pops
         - matchers:
-            - alertname = InfoInhibitor
+            - alertname = ConfigurationReloadFailure
           receiver: null
         # we'll catch everything else
         - receiver: "pushover"
 
     inhibit_rules:
-      []
-      # - target_matchers:
-      #     - severity=~"warning|info"
-      #   source_matchers:
-      #     - severity=critical
-      #   equal:
-      #     - cluster
-      #     - namespace
-      #     - alertname
-      # - target_matchers:
-      #     - severity=info
-      #   source_matchers:
-      #     - severity=warning
-      #   equal:
-      #     - cluster
-      #     - namespace
-      #     - alertname
-      # - target_matchers:
-      #     - severity=info
-      #   source_matchers:
-      #     - alertname=InfoInhibitor
-      #   equal:
-      #     - cluster
-      #     - namespace
+      - target_matchers:
+          - severity=~"warning|info"
+        source_matchers:
+          - severity=critical
+        equal:
+          - cluster
+          - namespace
+          - alertname
+      - target_matchers:
+          - severity=info
+        source_matchers:
+          - severity=warning
+        equal:
+          - cluster
+          - namespace
+          - alertname
+      - target_matchers:
+          - severity=info
+        source_matchers:
+          - alertname=InfoInhibitor
+        equal:
+          - cluster
+          - namespace
 
     receivers:
       - name: "pushover"
