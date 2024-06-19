@@ -1,0 +1,4 @@
+---
+- path: "/spec/hard/cpu"
+  op: "replace"
+  value: "10"

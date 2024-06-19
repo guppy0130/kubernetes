@@ -9,3 +9,6 @@ patches:
   - path: "pvc-patch.yml"
     target:
       kind: "PersistentVolumeClaim"
+  - path: "resource-quotas-patch.yml"
+    target:
+      kind: "ResourceQuota"
