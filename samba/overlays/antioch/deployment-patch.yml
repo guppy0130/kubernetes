@@ -1,0 +1,6 @@
+---
+- path: "/spec/template/spec/containers/0/env/-"
+  op: "add"
+  value:
+    name: "TZ"
+    value: "America/Los_Angeles"
