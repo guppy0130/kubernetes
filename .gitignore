@@ -1,2 +1,5 @@
 .vscode/*
 *.secret*
+
+*.full_manifest*
+*.full-manifest*
