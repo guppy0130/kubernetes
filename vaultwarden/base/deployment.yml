@@ -1,0 +1,49 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "vaultwarden"
+spec:
+  selector:
+    matchLabels:
+      app: "vaultwarden"
+  template:
+    metadata:
+      labels:
+        app: "vaultwarden"
+    spec:
+      containers:
+        - name: "vaultwarden"
+          image: "docker.io/vaultwarden/server:latest"
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            # podman kube play potentially doesn't resolve container port names
+            - containerPort: 3011
+              name: "vaultwarden"
+          volumeMounts:
+            - mountPath: "/data"
+              name: "vaultwarden-data"
+          startupProbe:
+            httpGet:
+              port: "vaultwarden"
+            initialDelaySeconds: 5
+          livenessProbe:
+            httpGet:
+              port: "vaultwarden"
+          env:
+            - name: "ROCKET_PORT"
+              value: "3011"
+          envFrom:
+            - configMapRef:
+                name: "vaultwarden-config"
+            - secretRef:
+                name: "vaultwarden-secrets"
+      volumes:
+        - name: "vaultwarden-data"
+          hostPath:
+            path: "/data/bitwarden"
+          # persistentVolumeClaim:
+          #   claimName: "vaultwarden-data"
