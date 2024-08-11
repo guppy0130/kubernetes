@@ -3,4 +3,4 @@
   op: "add"
   value:
     name: "TZ"
-    value: "America/Los_Angeles"
+    value: "America/Chicago"
