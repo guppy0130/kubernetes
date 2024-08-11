@@ -3,3 +3,4 @@
 
 *.full_manifest*
 *.full-manifest*
+*.kube
