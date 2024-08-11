@@ -18,11 +18,11 @@ spec:
         fsGroup: 1000
       containers:
         - name: "komga"
-          image: "gotson/komga:1.10.1"
+          image: "gotson/komga:1.11.2"
           resources:
             limits:
-              memory: "500Mi"
-              cpu: "250m"
+              memory: "750Mi"
+              cpu: "500m"
           env: []
           ports:
             - containerPort: 25600
