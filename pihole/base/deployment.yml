@@ -16,7 +16,7 @@ spec:
       hostNetwork: true
       containers:
         - name: "pihole"
-          image: "pihole/pihole:2023.11.0"
+          image: "pihole/pihole:2024.07.0"
           resources:
             limits:
               memory: "128Mi"
