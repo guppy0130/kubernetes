@@ -1,0 +1,19 @@
+---
+apiVersion: "networking.k8s.io/v1"
+kind: "Ingress"
+metadata:
+  name: "omada-controller"
+  labels:
+    name: "omada-controller"
+spec:
+  rules:
+    - host: "omada-controller.k3s.home"
+      http:
+        paths:
+          - pathType: "Prefix"
+            path: "/"
+            backend:
+              service:
+                name: "omada-controller"
+                port:
+                  name: "manage-http"
