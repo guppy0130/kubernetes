@@ -6,5 +6,5 @@ metadata:
 spec:
   hard:
     cpu: 2.5
-    memory: "2Gi"
+    memory: "3Gi"
     ephemeral-storage: "5Gi"
