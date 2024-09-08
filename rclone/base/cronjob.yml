@@ -21,7 +21,7 @@ spec:
               image: "docker.io/rclone/rclone"
               resources:
                 limits:
-                  memory: "128Mi"
+                  memory: "64Mi"
                   cpu: "500m"
               envFrom:
                 - secretRef:
