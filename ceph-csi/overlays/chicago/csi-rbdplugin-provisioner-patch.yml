@@ -12,9 +12,17 @@
 #     - "--setmetadata=true"
 
 # stable releases
-- path: "/spec/template/spec/containers/4/image"
+- path: "/spec/template/spec/containers/0/image"
   op: "replace"
-  value: "quay.io/cephcsi/cephcsi:v3.10.1"
+  value: "quay.io/cephcsi/cephcsi:v3.12.2"
+
+- path: "/spec/template/spec/containers/5/image"
+  op: "replace"
+  value: "quay.io/cephcsi/cephcsi:v3.12.2"
+
+- path: "/spec/template/spec/containers/6/image"
+  op: "replace"
+  value: "quay.io/cephcsi/cephcsi:v3.12.2"
 
 - path: "/spec/replicas"
   op: "replace"
