@@ -133,7 +133,9 @@ lvmd:
     - name: hdd
       volume-group: hdd-vg
       default: false
-      spare-gb: 10
+      spare-gb: 13824  # 13.5 * 1024
+      lvcreate-options:
+        - "--type=raid1"
 
   # lvmd.args -- Arguments to be passed to the command.
   args: []
