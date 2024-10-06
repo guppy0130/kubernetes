@@ -1,0 +1,8 @@
+{
+  "fast_open": true,
+  "method": "aes-256-gcm",
+  "mode": "tcp_and_udp",
+  "server": "::",
+  "server_port": 10890,
+  "password": "${SS_SERVER_PASSWORD}"
+}

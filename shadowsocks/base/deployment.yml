@@ -1,0 +1,43 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "shadowsocks"
+spec:
+  selector:
+    matchLabels:
+      app: "shadowsocks"
+  template:
+    spec:
+      containers:
+        - name: "shadowsocks"
+          image: "ghcr.io/shadowsocks/ssserver-rust:latest"
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          envFrom:
+            - secretRef:
+                name: "SS_SERVER_PASSWORD"
+          ports:
+            - containerPort: 10890
+              protocol: "TCP"
+            - containerPort: 10890
+              protocol: "UDP"
+          livenessProbe:
+            tcpSocket:
+              port: 10890
+            failureThreshold: 3
+            initialDelaySeconds: 1
+            timeoutSeconds: 1
+          readinessProbe:
+            tcpSocket:
+              port: 10890
+            initialDelaySeconds: 2
+          volumeMounts:
+            - mountPath: "/etc/shadowsocks-rust"
+              name: "config"
+      volumes:
+        - name: "config"
+          configMap:
+            name: "shadowsocks-config"
