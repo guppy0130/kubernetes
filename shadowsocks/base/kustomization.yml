@@ -1,0 +1,21 @@
+---
+apiVersion: "kustomize.config.k8s.io/v1beta1"
+kind: "Kustomization"
+namespace: "default"
+commonLabels:
+  app: "shadowsocks"
+
+resources:
+  - "deployment.yml"
+  - "service.yml"
+
+configMapGenerator:
+  - name: "shadowsocks-config"
+    files:
+      - "config.json"
+
+# https://vault.inthemainfra.me/ui/vault/secrets/kubernetes/kv/shadowsocks/details?version=1
+secretGenerator:
+  - name: "SS_SERVER_PASSWORD"
+    envs:
+      - "SS_SERVER_PASSWORD.secret"
