@@ -1,0 +1,111 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "omada-controller"
+spec:
+  strategy:
+    type: "Recreate"
+  selector:
+    matchLabels:
+      app: "omada-controller"
+  template:
+    metadata:
+      labels:
+        app: "omada-controller"
+    spec:
+      nodeName: "k3s-node-1"
+      hostNetwork: true
+      containers:
+        - name: "omada-controller"
+          imagePullPolicy: "Always"
+          image: "docker.io/mbentley/omada-controller:latest-chromium"
+          resources:
+            limits:
+              memory: "2Gi"
+              cpu: 1.25
+          livenessProbe:
+            exec:
+              command:
+                - "/healthcheck.sh"  # TODO: maybe httpGet instead?
+            periodSeconds: 60
+            failureThreshold: 5
+          startupProbe:
+            exec:
+              command:
+                - "/healthcheck.sh"
+            # wait 3mins first
+            initialDelaySeconds: 180
+            # test 24 * 5s after (+2mins) = 5mins
+            periodSeconds: 5
+            failureThreshold: 24
+          env:
+            # TODO: extra java args to limit memory?
+            # https://github.com/mbentley/docker-omada-controller/issues/198#issuecomment-1100485810
+            - name: "PUID"
+              value: "508"
+            - name: "PGID"
+              value: "508"
+            - name: "TZ"
+              value: "America/Chicago"
+            - name: "SHOW_SERVER_LOGS"
+              value: "true"
+            - name: "SHOW_MONGODB_LOGS"
+              value: "false"
+            # - name: "PORTAL_HTTP_PORT"
+            #   value: "8088"
+            # - name: "PORTAL_HTTPS_PORT"
+            #   value: "8843"
+            # - name: "PORT_ADOPT_V1"
+            #   value: "29812"
+            # - name: "PORT_APP_DISCOVERY"
+            #   value: "27001"
+            # - name: "PORT_DISCOVERY"
+            #   value: "29810"
+            # - name: "PORT_MANAGER_V1"
+            #   value: "29811"
+            # - name: "PORT_MANAGER_V2"
+            #   value: "29814"
+            # - name: "PORT_TRANSFER_V2"
+            #   value: "29815"
+            # - name: "PORT_RTTY"
+            #   value: "29816"
+            # - name: "PORT_UPGRADE_V1"
+            #   value: "29813"
+          ports:
+            - containerPort: 8088
+              name: "manage-http"
+            - containerPort: 8043
+              name: "manage-https"
+            - containerPort: 8843
+              name: "portal-https"
+            - containerPort: 27001
+              protocol: "UDP"
+              name: "app-discovery"
+            - containerPort: 29810
+              protocol: "UDP"
+              name: "discovery"
+            - containerPort: 29811
+              name: "manager-v1"
+            - containerPort: 29812
+              name: "adopt-v1"
+            - containerPort: 29813
+              name: "upgrade-v1"
+            - containerPort: 29814
+              name: "manager-v2"
+            - containerPort: 29815
+              name: "transfer-v2"
+            - containerPort: 29816
+              name: "rtty"
+          volumeMounts:
+            - mountPath: "/opt/tplink/EAPController/data"
+              name: "omada-data"
+            - mountPath: "/opt/tplink/EAPController/logs"
+              name: "omada-logs"
+      volumes:
+        - name: "omada-data"
+          persistentVolumeClaim:
+            claimName: "omada-data"
+        - name: "omada-logs"  # TODO: do we want this longer?
+          emptyDir:
+            sizeLimit: "1Gi"
