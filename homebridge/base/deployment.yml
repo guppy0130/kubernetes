@@ -17,7 +17,7 @@ spec:
       hostNetwork: true
       containers:
         - name: "homebridge"
-          image: "homebridge/homebridge:2024-01-08"
+          image: "homebridge/homebridge:2024-12-12"
           # avahi present by default, turn it off (use ciao)
           # https://github.com/oznu/docker-homebridge/issues/437
           env:
