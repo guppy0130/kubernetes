@@ -2,21 +2,21 @@
 apiVersion: "networking.k8s.io/v1"
 kind: "Ingress"
 metadata:
-  name: "sunshine"
+  name: "wolf"
   labels:
-    name: "sunshine"
+    name: "wolf"
 spec:
   rules:
-    - host: "sunshine.k3s.home"
+    - host: "wolf.k3s.home"
       http:
         paths:
           - pathType: Prefix
             path: "/"
             backend:
               service:
-                name: "sunshine"
+                name: "wolf"
                 port:
-                  name: "sunshine"
+                  name: "wolf"
     - host: "steam-http.k3s.home"
       http:
         paths:
@@ -24,6 +24,6 @@ spec:
             path: "/"
             backend:
               service:
-                name: "sunshine"
+                name: "wolf"
                 port:
                   name: "steam-http"

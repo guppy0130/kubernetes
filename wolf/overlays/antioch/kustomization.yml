@@ -4,7 +4,7 @@ kind: "Kustomization"
 namespace: "default"
 labels:
   - pairs:
-      app: "sunshine"
+      app: "wolf"
     includeSelectors: true
 
 resources:
@@ -17,4 +17,4 @@ patches:
   - path: "pvc-patch.yml"
     target:
       kind: "PersistentVolumeClaim"
-      name: "sunshine-pvc"
+      name: "wolf-pvc"

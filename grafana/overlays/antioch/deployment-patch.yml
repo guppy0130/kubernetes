@@ -1,0 +1,26 @@
+---
+- path: "/spec/template/spec/containers/0/volumeMounts/-"
+  op: "add"
+  value:
+    - mountPath: "/etc/grafana/grafana.ini"
+      name: "grafana-configmap"
+      subPath: "grafana.ini"
+    - mountPath: "/etc/grafana/provisioning"
+      name: "grafana-provisioning"
+
+- path: "/spec/template/volumes/-"
+  op: "add"
+  value:
+    - name: "grafana-configmap"
+      configMap:
+        name: "grafana-config"
+    - name: "grafana-provisioning"
+      configMap:
+        name: "grafana-provisioning"
+        items:
+          - key: "victoriametrics.yml"
+            path: "datasources/victoriametrics.yml"
+          - key: "loki.yml"
+            path: "datasources/loki.yml"
+          - key: "alertmanager.yml"
+            path: "datasources/alertmanager.yml"

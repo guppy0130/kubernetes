@@ -2,17 +2,17 @@
 apiVersion: "apps/v1"
 kind: "Deployment"
 metadata:
-  name: "sunshine"
+  name: "wolf"
 spec:
   strategy:
     type: "Recreate"
   selector:
     matchLabels:
-      app: "sunshine"
+      app: "wolf"
   template:
     metadata:
       labels:
-        app: "sunshine"
+        app: "wolf"
     spec:
       hostNetwork: true
       securityContext:
@@ -21,8 +21,8 @@ spec:
         appArmorProfile:
           type: "Unconfined"
       containers:
-        - name: "sunshine"
-          image: "lscr.io/linuxserver/steamos:latest"
+        - name: "wolf"
+          image: "ghcr.io/games-on-whales/wolf:stable"
           resources:
             requests:
               memory: "4Gi"
@@ -37,7 +37,7 @@ spec:
               value: "1001"
           ports:
             - containerPort: 47990
-              name: "sunshine"
+              name: "wolf"
             - containerPort: 3000
               name: "steam-http"
             - containerPort: 47984
@@ -51,7 +51,7 @@ spec:
               protocol: "UDP"
           volumeMounts:
             - mountPath: "/config"
-              name: "sunshine-pvc"
+              name: "wolf-pvc"
             - mountPath: "/dev/shm"
               name: "dev-shm"
             - mountPath: "/dev/input"
@@ -59,9 +59,9 @@ spec:
             - mountPath: "/run/udev/data"
               name: "run-udev-data"
       volumes:
-        - name: "sunshine-pvc"
+        - name: "wolf-pvc"
           persistentVolumeClaim:
-            claimName: "sunshine-pvc"
+            claimName: "wolf-pvc"
         - name: "dev-shm"
           emptyDir:
             medium: "Memory"
