@@ -136,6 +136,8 @@ lvmd:
       spare-gb: 13824  # 13.5 * 1024
       lvcreate-options:
         - "--type=raid1"
+        - "/dev/sdc1"
+        - "/dev/sdd1"
 
   # lvmd.args -- Arguments to be passed to the command.
   args: []
