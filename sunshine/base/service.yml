@@ -1,0 +1,13 @@
+---
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "sunshine"
+spec:
+  selector:
+    app: "sunshine"
+  ports:
+    - port: 47990
+      name: "sunshine"
+    - port: 3000
+      name: "steam-http"
