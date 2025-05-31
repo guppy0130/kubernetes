@@ -21,7 +21,6 @@ metadata:
 spec:
   selector:
     app: "plex"
-  type: "NodePort"
   ports:
     - port: 32410
       name: "plex-gday-1"
@@ -39,7 +38,6 @@ metadata:
 spec:
   selector:
     app: "plex"
-  type: "NodePort"
   ports:
     - port: 5353
       name: "plex-bonjour"
