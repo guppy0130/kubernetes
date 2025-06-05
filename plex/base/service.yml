@@ -12,34 +12,33 @@ spec:
     - port: 32400
       name: "plex-http"
       targetPort: 32400
-      nodePort: 32400
----
-apiVersion: "v1"
-kind: "Service"
-metadata:
-  name: "plex-gday-udp"
-spec:
-  selector:
-    app: "plex"
-  type: "NodePort"
-  ports:
-    - port: 32410
-      name: "plex-gday-1"
-    - port: 32412
-      name: "plex-gday-2"
-    - port: 32413
-      name: "plex-gday-3"
-    - port: 32414
-      name: "plex-gday-4"
----
-apiVersion: "v1"
-kind: "Service"
-metadata:
-  name: "plex-bonjour"
-spec:
-  selector:
-    app: "plex"
-  type: "NodePort"
-  ports:
-    - port: 5353
-      name: "plex-bonjour"
+# ---
+# apiVersion: "v1"
+# kind: "Service"
+# metadata:
+#   name: "plex-gday-udp"
+# spec:
+#   selector:
+#     app: "plex"
+#   type: "NodePort"
+#   ports:
+#     - port: 32410
+#       name: "plex-gday-1"
+#     - port: 32412
+#       name: "plex-gday-2"
+#     - port: 32413
+#       name: "plex-gday-3"
+#     - port: 32414
+#       name: "plex-gday-4"
+# ---
+# apiVersion: "v1"
+# kind: "Service"
+# metadata:
+#   name: "plex-bonjour"
+# spec:
+#   selector:
+#     app: "plex"
+#   type: "NodePort"
+#   ports:
+#     - port: 5353
+#       name: "plex-bonjour"

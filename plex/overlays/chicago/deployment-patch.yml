@@ -3,6 +3,13 @@
   op: "replace"
   value: "k3s-node-3"
 
+- path: "/spec/template/spec/hostNetwork"
+  op: "replace"
+  value: true
+
+- path: "/spec/template/spec/containers/0/ports"
+  op: "remove"
+
 - path: "/spec/template/spec/containers/0/env/-"
   op: "add"
   value:

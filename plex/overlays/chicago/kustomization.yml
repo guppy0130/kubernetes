@@ -6,8 +6,8 @@ commonLabels:
   app: "plex"
 
 resources:
-  - "plex-config-pv.yml"
   - "../../base"
+  # - "plex-config-pv.yml"
 
 patches:
   - path: "deployment-patch.yml"
