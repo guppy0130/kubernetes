@@ -12,7 +12,7 @@ metadata:
   name: readarr-config
 spec:
   capacity:
-    storage: 512Mi
+    storage: 1Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteOnce
