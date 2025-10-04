@@ -1,0 +1,15 @@
+---
+# syslog is not actually HTTP so we have to expose TCP directly
+apiVersion: "v1"
+kind: "Service"
+metadata:
+  name: "victorialogs-syslog-tcp"
+spec:
+  type: "LoadBalancer"
+  ports:
+    - port: 29514
+      protocol: "TCP"
+      name: "syslog"
+      nodePort: 30002
+  selector:
+    app.kubernetes.io/name: "victoria-logs-single"
