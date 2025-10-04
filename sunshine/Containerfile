@@ -1,0 +1,11 @@
+FROM lizardbyte/sunshine:latest-ubuntu-24.04
+
+USER root
+
+RUN apt update && apt install curl ca-certificates xorg
+RUN curl -sSfLO http://media.steampowered.com/client/installer/steam.deb
+RUN apt install ./steam.deb
+
+USER lizardbyte
+
+ENTRYPOINT steam && sunshine
