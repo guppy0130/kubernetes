@@ -1,0 +1,4 @@
+---
+- path: "/spec/storageClassName"
+  op: "replace"
+  value: "topolvm-nvme-ext4"
