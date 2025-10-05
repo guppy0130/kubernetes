@@ -1,0 +1,30 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "epaper-image-display-server"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "epaper-image-display-server"
+  strategy:
+    type: "Recreate"
+  template:
+    spec:
+      containers:
+        - name: "epaper-image-display-server"
+          image: "guppy0130/epaper_image_display_server:946e7b6"
+          env:
+            - name: "IMAGE_LOCATION"
+              value: "/mnt/pvc/epaper-image-display-server"
+          ports:
+            - containerPort: 8000
+              name: "epaper-display"
+          volumeMounts:
+            - mountPath: "/mnt/pvc"
+              name: "media-pvc"
+      volumes:
+        - name: "media-pvc"
+          persistentVolumeClaim:
+            claimName: "media-pvc"

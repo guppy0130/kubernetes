@@ -1,0 +1,17 @@
+---
+apiVersion: "networking.k8s.io/v1"
+kind: "Ingress"
+metadata:
+  name: "epaper-image-display-server"
+spec:
+  rules:
+    - host: "epaper-image-display-server.k3s.home"
+      http:
+        paths:
+          - path: "/"
+            pathType: "Prefix"
+            backend:
+              service:
+                name: "epaper-image-display-server"
+                port:
+                  name: "epaper-display"
