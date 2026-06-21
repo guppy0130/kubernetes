@@ -16,7 +16,7 @@ spec:
         fsGroup: 1000
       containers:
         - name: "transmission-openvpn"
-          image: "haugene/transmission-openvpn:5.3.1"
+          image: "haugene/transmission-openvpn:5.4.1"
           securityContext:
             capabilities:
               add:
