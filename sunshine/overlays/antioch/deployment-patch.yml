@@ -1,0 +1,30 @@
+---
+- path: "/spec/template/spec/containers/0/env/-"
+  op: "add"
+  value:
+    name: "TZ"
+    value: "America/Los_Angeles"
+
+# - path: "/spec/template/spec/containers/0/env/-"
+#   op: "add"
+#   value:
+#     name: "DRINODE"
+#     value: "/dev/dri/renderD128"
+
+# - op: "add"
+#   path: "/spec/template/spec/volumes/-"
+#   value:
+#     name: "intel-quicksync"
+#     hostPath:
+#       path: "/dev/dri"
+
+# - op: "add"
+#   path: "/spec/template/spec/containers/0/volumeMounts/-"
+#   value:
+#     name: "intel-quicksync"
+#     mountPath: "/dev/dri"
+
+# - op: "add"
+#   path: "/spec/template/spec/containers/0/securityContext"
+#   value:
+#     privileged: true
