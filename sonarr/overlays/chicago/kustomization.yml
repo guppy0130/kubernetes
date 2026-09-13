@@ -6,7 +6,7 @@ commonLabels:
   app: "sonarr"
 
 resources:
-  - "sonarr-config-pv.yml"
+  # - "sonarr-config-pv.yml"
   - "../../base"
 
 patches:
