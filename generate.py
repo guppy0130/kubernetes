@@ -156,6 +156,7 @@ def base_manifest_generator(
                                             "backend": {
                                                 "service": {
                                                     "name": app_name,
+                                                    # TODO: truncate to 15 char
                                                     "port": {"name": app_name},
                                                 }
                                             },
@@ -173,7 +174,13 @@ def base_manifest_generator(
                 | extras
                 | {
                     "spec": {
-                        "ports": [{"port": port, "name": app_name}],
+                        "ports": [
+                            {
+                                "port": port,
+                                # TODO: truncate to 15 char
+                                "name": app_name,
+                            }
+                        ],
                         "selector": {"app": app_name},
                     }
                 }
@@ -322,6 +329,7 @@ def generate(
             output = Path(overlay_dir, f"{manifest_type.value}-patch.yml")
             patches = generate_patches(manifest_type=manifest_type, env=env)
             if patches:  # if no patches, don't generate file
+                # TODO: handle patches with patches instead of resources
                 extra_resources.append(output)
                 yaml.dump(patches, output)
 
