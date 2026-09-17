@@ -1,0 +1,74 @@
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "sunshine"
+spec:
+  strategy:
+    type: "Recreate"
+  selector:
+    matchLabels:
+      app: "sunshine"
+  template:
+    metadata:
+      labels:
+        app: "sunshine"
+    spec:
+      hostNetwork: true
+      securityContext:
+        seccompProfile:
+          type: "Unconfined"
+        appArmorProfile:
+          type: "Unconfined"
+      containers:
+        - name: "sunshine"
+          image: "lscr.io/linuxserver/steamos:latest"
+          resources:
+            requests:
+              memory: "4Gi"
+              cpu: "4"
+            limits:
+              memory: "8Gi"
+              cpu: "8"
+          env:
+            - name: "PUID"
+              value: "1001"
+            - name: "PGID"
+              value: "1001"
+          ports:
+            - containerPort: 47990
+              name: "sunshine"
+            - containerPort: 3000
+              name: "steam-http"
+            - containerPort: 47984
+            - containerPort: 47989
+            - containerPort: 48010
+            - containerPort: 47998
+              protocol: "UDP"
+            - containerPort: 47999
+              protocol: "UDP"
+            - containerPort: 48000
+              protocol: "UDP"
+          volumeMounts:
+            - mountPath: "/config"
+              name: "sunshine-pvc"
+            - mountPath: "/dev/shm"
+              name: "dev-shm"
+            - mountPath: "/dev/input"
+              name: "inputs"
+            - mountPath: "/run/udev/data"
+              name: "run-udev-data"
+      volumes:
+        - name: "sunshine-pvc"
+          persistentVolumeClaim:
+            claimName: "sunshine-pvc"
+        - name: "dev-shm"
+          emptyDir:
+            medium: "Memory"
+            sizeLimit: "2Gi"
+        - name: "inputs"
+          hostPath:
+            path: "/dev/input"
+        - name: "run-udev-data"
+          hostPath:
+            path: "/run/udev/data"
